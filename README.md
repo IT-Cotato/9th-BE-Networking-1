@@ -6,6 +6,7 @@
 - 이번 과제는 앞으로 네트워킹에서 기반이 될 프로젝트 코드를 작성하는 것입니다.
 - [깃허브 레포지토리](https://github.com/IT-Cotato/9th-BE-Networking-1/tree/sample)
 - 위 저장소를 fork 한 후 clone 해서 코드를 작성합니다.
+- clone 후 새로운 branch를 만든 후 작업합니다.
 - `DB 연결 등 환경 설정은 자유롭게 진행합니다.`
 - 과제를 완료한 후 Pull Request 를 만든 후 하단의 표에 각자의 Pull Request 주소를 적어주세요.
 
