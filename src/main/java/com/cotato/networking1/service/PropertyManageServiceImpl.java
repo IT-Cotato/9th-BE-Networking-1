@@ -6,8 +6,6 @@ import com.cotato.networking1.repository.PropertyRepository;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,8 +21,10 @@ public class PropertyManageServiceImpl implements PropertyService {
   }
 
   @Override
-  public ResponseEntity<String> upload(MultipartFile file) {
-    return new ResponseEntity<>("File uploaded successfully!", HttpStatus.OK);
+  public void upload(MultipartFile file) {
+
+
+
   }
 
 
