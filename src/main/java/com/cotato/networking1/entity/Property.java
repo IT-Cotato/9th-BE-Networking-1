@@ -8,10 +8,12 @@ import jakarta.persistence.Id;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @Entity
 @Getter
+@Setter
 @ToString
 @NoArgsConstructor
 public class Property {
@@ -24,11 +26,11 @@ public class Property {
   @Column(name = "zipcode")
   private Integer zipCode;
 
-  @Column(name = "roadNameAddress")
-  private String roadNameAddress;
-
-  @Column(name = "landLotNameAddress")
+  @Column(name = "land_lot_name_address")
   private String landLotNameAddress;
+
+  @Column(name = "road_name_address")
+  private String roadNameAddress;
 
   @Builder
   public Property(Long id, Integer zipCode, String roadNameAddress, String landLotNameAddress) {
