@@ -8,7 +8,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class PropertyManageServiceImpl implements PropertyService {
@@ -19,14 +18,6 @@ public class PropertyManageServiceImpl implements PropertyService {
   public PropertyManageServiceImpl(PropertyRepository repository) {
     this.repository = repository;
   }
-
-  @Override
-  public void upload(MultipartFile file) {
-
-
-
-  }
-
 
   public List<PropertyDto> findPropertyByZipCode(int zipCode) {
     List<Property> properties = repository.findAll();

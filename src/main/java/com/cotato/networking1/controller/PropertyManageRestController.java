@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping(path = "/api",
@@ -26,12 +25,6 @@ public class PropertyManageRestController {
   @Autowired
   public PropertyManageRestController(PropertyManageServiceImpl propertyService) {
     this.propertyService = propertyService;
-  }
-
-  @PostMapping(path = "/test-data")
-  public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file) {
-    propertyService.upload(file);
-    return new ResponseEntity<>("File uploaded successfully!", HttpStatus.OK);
   }
 
   //우편번호에 해당하는 매물 정보를 응답
