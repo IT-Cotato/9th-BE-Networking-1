@@ -1,8 +1,8 @@
 package com.cotato.networking1.service;
 
-import org.springframework.web.multipart.MultipartFile;
+import java.io.IOException;
 
 public interface ExcelManageService {
 
-  void upload(MultipartFile file);
+  void upload() throws IOException;
 }

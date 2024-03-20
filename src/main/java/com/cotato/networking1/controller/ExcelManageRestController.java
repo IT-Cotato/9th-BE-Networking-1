@@ -1,14 +1,15 @@
 package com.cotato.networking1.controller;
 
 import com.cotato.networking1.service.ExcelManageServiceImpl;
+import java.io.IOException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
+@Slf4j
 @RestController
 public class ExcelManageRestController {
 
@@ -20,10 +21,9 @@ public class ExcelManageRestController {
     this.excelManageService = excelManageService;
   }
 
-  @PostMapping(path = "/api/test-data")
-  public ResponseEntity<String> upload(
-      @RequestParam(value = "file", required = false) MultipartFile file) {
-    excelManageService.upload(file);
+  @GetMapping(path = "/api/test-data")
+  public ResponseEntity<String> upload() throws IOException {
+    excelManageService.upload();
     return new ResponseEntity<>("File uploaded successfully!", HttpStatus.OK);
   }
 
