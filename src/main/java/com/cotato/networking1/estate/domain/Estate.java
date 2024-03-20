@@ -20,7 +20,7 @@ public class Estate {
 	private Long id;
 
 	@Column(nullable = false)
-	private int zipCode;
+	private String zipCode;
 
 	@Column(nullable = false)
 	private String roadNameAddress;
@@ -28,17 +28,14 @@ public class Estate {
 	@Column(nullable = false)
 	private String landLotNameAddress;
 
-	private Estate(int zipCode, String roadNameAddress, String landLotNameAddress) {
+	private Estate(String zipCode, String roadNameAddress, String landLotNameAddress) {
 		this.zipCode = zipCode;
 		this.roadNameAddress = roadNameAddress;
 		this.landLotNameAddress = landLotNameAddress;
 	}
 
-	public static Estate create(EstatePostRequest estatePostRequest) {
-		return new Estate(
-			estatePostRequest.getZipCode(),
-			estatePostRequest.getRoadNameAddress(),
-			estatePostRequest.getLandLotNameAddress());
+	public static Estate create(String zipCode, String roadNameAddress, String landLotNameAddress) {
+		return new Estate(zipCode, roadNameAddress, landLotNameAddress);
 	}
 
 

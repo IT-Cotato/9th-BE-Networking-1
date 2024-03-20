@@ -25,12 +25,12 @@ public class EstateController {
 
 	@GetMapping
 	public EstatesResponse get(@RequestParam(value = "zip-code") String zipCode) {
-		return estateService.makeEstateResponses(Integer.getInteger(zipCode));
+		return estateService.makeEstateResponses(zipCode);
 	}
 
 	@PostMapping
 	public EstatePostResponse post(@RequestBody EstatePostRequest estatePostRequest) {
-		return estateService.saveEstate(estatePostRequest);
+		return estateService.saveEstate(estatePostRequest.getZipCode(), estatePostRequest.getRoadNameAddress(), estatePostRequest.getLandLotNameAddress());
 	}
 
 	@DeleteMapping

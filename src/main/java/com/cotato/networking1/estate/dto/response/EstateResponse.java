@@ -8,11 +8,11 @@ import lombok.Getter;
 public class EstateResponse {
 
 	private final Long id;
-	private final int zipCode;
+	private final String zipCode;
 	private final String roadNameAddress;
 	private final String landLotNameAddress;
 
-	private EstateResponse(Long id, int zipCode, String roadNameAddress, String landLotNameAddress) {
+	private EstateResponse(Long id, String zipCode, String roadNameAddress, String landLotNameAddress) {
 		this.id = id;
 		this.zipCode = zipCode;
 		this.roadNameAddress = roadNameAddress;

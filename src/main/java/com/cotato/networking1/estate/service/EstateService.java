@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cotato.networking1.common.dto.DataResponse;
 import com.cotato.networking1.estate.dto.request.EstatePostRequest;
@@ -17,15 +18,17 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class EstateService {
 
 	private final EstateRepository estateRepository;
 
-	private List<Estate> findEstatesByZipCode(int zipCode) {
+	private List<Estate> findEstatesByZipCode(String zipCode) {
 		return estateRepository.findAllByZipCode(zipCode);
 	}
 
-	public EstatesResponse makeEstateResponses(int zipCode) {
+	@Transactional(readOnly = true)
+	public EstatesResponse makeEstateResponses(String zipCode) {
 		List<EstateResponse> responses = findEstatesByZipCode(zipCode).stream()
 			.map(EstateResponse::create)
 			.toList();
@@ -33,8 +36,8 @@ public class EstateService {
 		return EstatesResponse.create(responses);
 	}
 
-	public EstatePostResponse saveEstate(EstatePostRequest estatePostRequest) {
-		Estate estate = Estate.create(estatePostRequest);
+	public EstatePostResponse saveEstate(String zipCode, String roadNameAddress, String landLotNameAddress) {
+		Estate estate = Estate.create(zipCode, roadNameAddress, landLotNameAddress);
 
 		estate = estateRepository.saveAndFlush(estate);
 
@@ -49,7 +52,6 @@ public class EstateService {
 		}
 
 		estates.forEach(estate -> estateRepository.deleteById(estate.getId()));
-		;
 		return DataResponse.ok();
 	}
 

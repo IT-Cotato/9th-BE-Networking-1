@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public class EstatePostRequest {
 
-	private int zipCode;
+	private String zipCode;
 
 	private String roadNameAddress;
 

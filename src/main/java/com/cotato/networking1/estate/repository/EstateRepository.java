@@ -8,7 +8,7 @@ import com.cotato.networking1.estate.domain.Estate;
 
 public interface EstateRepository  extends JpaRepository<Estate, Long> {
 
-	List<Estate> findAllByZipCode(int zipCode);
+	List<Estate> findAllByZipCode(String zipCode);
 
 	List<Estate> findAllByRoadNameAddress(String roadNameAddress);
 }
