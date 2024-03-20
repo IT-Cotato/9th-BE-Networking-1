@@ -4,6 +4,7 @@ import com.cotato.networking1.domain.enttiy.Property;
 import com.cotato.networking1.repository.PropertyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,7 +18,13 @@ public class PropertyService {
         return propertyRepository.findAllByZipCode(zipCode);
     }
 
+    @Transactional
     public Long registerProperty(Property property) {
         return propertyRepository.save(property).getId();
+    }
+
+    @Transactional
+    public void deleteByRoadNameAddress(String roadNameAddress) {
+        propertyRepository.deleteByRoadNameAddress(roadNameAddress);
     }
 }
