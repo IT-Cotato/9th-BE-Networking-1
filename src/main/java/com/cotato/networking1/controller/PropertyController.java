@@ -1,6 +1,7 @@
 package com.cotato.networking1.controller;
 
 import com.cotato.networking1.domain.dto.PropertyListResponse;
+import com.cotato.networking1.domain.dto.PropertyRegisterResponse;
 import com.cotato.networking1.domain.enttiy.Property;
 import com.cotato.networking1.service.PropertyService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,10 @@ public class PropertyController {
         return ResponseEntity.ok(new PropertyListResponse(propertyService.getAllByZipCode(zipCode)));
     }
 
-//    @PostMapping()
-//    public ResponseEntity<>
+    @PostMapping()
+    public ResponseEntity<PropertyRegisterResponse> registerProperty(@RequestBody Property property) {
+        return ResponseEntity.ok(new PropertyRegisterResponse(propertyService.registerProperty(property)));
+    }
+
+
 }
