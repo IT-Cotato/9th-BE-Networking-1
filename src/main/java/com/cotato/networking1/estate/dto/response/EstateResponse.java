@@ -1,4 +1,4 @@
-package com.cotato.networking1.estate.dto;
+package com.cotato.networking1.estate.dto.response;
 
 import com.cotato.networking1.estate.domain.Estate;
 

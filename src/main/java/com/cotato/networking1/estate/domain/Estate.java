@@ -1,6 +1,6 @@
 package com.cotato.networking1.estate.domain;
 
-import com.cotato.networking1.estate.dto.EstateGetRequest;
+import com.cotato.networking1.estate.dto.request.EstatePostRequest;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,7 +34,7 @@ public class Estate {
 		this.landLotNameAddress = landLotNameAddress;
 	}
 
-	public Estate create(EstateGetRequest estateGetRequest) {
+	public Estate create(EstatePostRequest estateGetRequest) {
 		return new Estate(
 			estateGetRequest.getZipCode(),
 			estateGetRequest.getRoadNameAddress(),
