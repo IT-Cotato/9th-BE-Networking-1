@@ -19,12 +19,12 @@ public class PropertyController {
 
     @GetMapping()
     public ResponseEntity<PropertyListResponse> getAllByZipCode(@RequestParam("zip-code") String zipCode) {
-        return ResponseEntity.ok(new PropertyListResponse(propertyService.getAllByZipCode(zipCode)));
+        return ResponseEntity.status(HttpStatus.OK).body(new PropertyListResponse(propertyService.getAllByZipCode(zipCode)));
     }
 
     @PostMapping()
     public ResponseEntity<PropertyRegisterResponse> registerProperty(@RequestBody Property property) {
-        return ResponseEntity.ok(new PropertyRegisterResponse(propertyService.registerProperty(property)));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new PropertyRegisterResponse(propertyService.registerProperty(property)));
     }
 
 
