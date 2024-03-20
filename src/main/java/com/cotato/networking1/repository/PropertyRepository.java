@@ -3,6 +3,8 @@ package com.cotato.networking1.repository;
 import com.cotato.networking1.domain.enttiy.Property;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PropertyRepository extends JpaRepository<Property, Long> {
+import java.util.List;
 
+public interface PropertyRepository extends JpaRepository<Property, Long> {
+    public List<Property> findAllByZipCode(String zipCode);
 }
