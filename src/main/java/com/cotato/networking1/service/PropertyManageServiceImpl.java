@@ -19,7 +19,7 @@ public class PropertyManageServiceImpl implements PropertyService {
     this.repository = repository;
   }
 
-  public List<PropertyDto> findPropertyByZipCode(int zipCode) {
+  public List<PropertyDto> findPropertyByZipCode(String zipCode) {
     List<Property> properties = repository.findAll();
     List<PropertyDto> propertiesDtoList = new ArrayList<>();
 
@@ -28,7 +28,7 @@ public class PropertyManageServiceImpl implements PropertyService {
         PropertyDto propertiesDto = PropertyDto.builder()
             .id(property.getId())
             .zipCode(property.getZipCode())
-            .roadNameAddress(property.getLandLotNameAddress())
+            .roadNameAddress(property.getRoadNameAddress())
             .landLotNameAddress(property.getLandLotNameAddress())
             .build();
         propertiesDtoList.add(propertiesDto);
@@ -40,7 +40,6 @@ public class PropertyManageServiceImpl implements PropertyService {
   @Transactional
   @Override
   public Long enrollProperty(PropertyDto propertyDto) {
-    List<Property> properties = repository.findAll();
     return repository.save(propertyDto.toEntity()).getId();
   }
 
