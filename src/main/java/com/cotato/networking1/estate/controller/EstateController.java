@@ -34,7 +34,7 @@ public class EstateController {
 	}
 
 	@DeleteMapping
-	public DataResponse delete(@RequestParam(value = "roadNameAddress") String roadNameAddress) {
+	public DataResponse delete(@RequestParam(value = "road-name-address") String roadNameAddress) {
 		return estateService.deleteEstate(roadNameAddress);
 	}
 }

@@ -15,4 +15,8 @@ public class DataResponse {
 	public static DataResponse ok() {
 		return new DataResponse(HttpStatus.OK.value());
 	}
+
+	public static DataResponse error(int statusCode) {
+		return new DataResponse(statusCode);
+	}
 }
