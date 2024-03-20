@@ -34,11 +34,11 @@ public class Estate {
 		this.landLotNameAddress = landLotNameAddress;
 	}
 
-	public Estate create(EstatePostRequest estateGetRequest) {
+	public static Estate create(EstatePostRequest estatePostRequest) {
 		return new Estate(
-			estateGetRequest.getZipCode(),
-			estateGetRequest.getRoadNameAddress(),
-			estateGetRequest.getLandLotNameAddress());
+			estatePostRequest.getZipCode(),
+			estatePostRequest.getRoadNameAddress(),
+			estatePostRequest.getLandLotNameAddress());
 	}
 
 

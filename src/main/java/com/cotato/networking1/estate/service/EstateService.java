@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.cotato.networking1.estate.dto.request.EstatePostRequest;
+import com.cotato.networking1.estate.dto.response.EstatePostResponse;
 import com.cotato.networking1.estate.dto.response.EstatesResponse;
 import com.cotato.networking1.estate.domain.Estate;
 import com.cotato.networking1.estate.dto.response.EstateResponse;
@@ -29,5 +31,12 @@ public class EstateService {
 		return EstatesResponse.create(responses);
 	}
 
+	public EstatePostResponse saveEstate(EstatePostRequest estatePostRequest) {
+		Estate estate = Estate.create(estatePostRequest);
+
+		estate = estateRepository.saveAndFlush(estate);
+
+		return EstatePostResponse.create(estate.getId());
+	}
 
 }
