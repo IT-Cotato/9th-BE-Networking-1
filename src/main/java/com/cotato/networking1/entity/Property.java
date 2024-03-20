@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
+@Table(name = "property")
 public class Property {
 
   @Id
@@ -23,17 +25,17 @@ public class Property {
   @Column(name = "id", nullable = false)
   private Long id;
 
-  @Column(name = "zipcode")
-  private Integer zipCode;
+  @Column(name = "zip-code")
+  private String zipCode;
 
-  @Column(name = "land_lot_name_address")
+  @Column(name = "land-lot-name-address")
   private String landLotNameAddress;
 
-  @Column(name = "road_name_address")
+  @Column(name = "road-name-address")
   private String roadNameAddress;
 
   @Builder
-  public Property(Long id, Integer zipCode, String roadNameAddress, String landLotNameAddress) {
+  public Property(Long id, String zipCode, String roadNameAddress, String landLotNameAddress) {
     this.id = id;
     this.zipCode = zipCode;
     this.roadNameAddress = roadNameAddress;

@@ -22,7 +22,7 @@ import lombok.ToString;
 public class PropertyDto implements Serializable {
 
   Long id;
-  Integer zipCode;
+  String zipCode;
   String roadNameAddress;
   String landLotNameAddress;
 
