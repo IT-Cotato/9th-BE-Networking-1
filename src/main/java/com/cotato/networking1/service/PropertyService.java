@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface PropertyService {
 
-  List<PropertyDto> findPropertyByZipCode(int zipCode); // 우편번호에 해당하는 모든 매물 정보
+  List<PropertyDto> findPropertyByZipCode(String zipCode); // 우편번호에 해당하는 모든 매물 정보
 
   Long enrollProperty(PropertyDto propertyDto); // 매물등록
 

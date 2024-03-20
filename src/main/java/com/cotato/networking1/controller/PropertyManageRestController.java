@@ -5,7 +5,6 @@ import com.cotato.networking1.service.PropertyManageServiceImpl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/api",
-    consumes = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(path = "/api")
 public class PropertyManageRestController {
 
   private final PropertyManageServiceImpl propertyService;
@@ -30,7 +28,7 @@ public class PropertyManageRestController {
   //우편번호에 해당하는 매물 정보를 응답
   @GetMapping(path = "/properties")
   public ResponseEntity<List<PropertyDto>> getPropertiesByZipCode(
-      @RequestParam("zip-code") int zipCode) {
+      @RequestParam("zip-code") String zipCode) {
     List<PropertyDto> properties = propertyService.findPropertyByZipCode(zipCode);
     return new ResponseEntity<>(properties, HttpStatus.OK);
   }
@@ -44,10 +42,10 @@ public class PropertyManageRestController {
 
   //도로명주소에 해당하는 매물을 삭제
   @DeleteMapping(path = "/properties")
-  public ResponseEntity<Void> deletePropertyByRoadNameAddress(
+  public ResponseEntity<String> deletePropertyByRoadNameAddress(
       @RequestParam("road-name-address") String roadNameAddress) {
     propertyService.deletePropertyByRoadNameAddress(roadNameAddress);
-    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    return new ResponseEntity<>("Delete Complete!!",HttpStatus.OK);
   }
 
 }
