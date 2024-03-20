@@ -2,6 +2,7 @@ package com.cotato.networking1.service;
 
 import com.cotato.networking1.dto.PropertyDto;
 import java.util.List;
+import org.springframework.http.ResponseEntity;
 
 public interface PropertyService {
 
@@ -9,6 +10,6 @@ public interface PropertyService {
 
   Long enrollProperty(PropertyDto propertyDto); // 매물등록
 
-  void deletePropertyByRoadNameAddress(String roadNameAddress); // 도로명주소에 해당하는 매물 삭제
+  ResponseEntity<String> deletePropertyByRoadNameAddress(String roadNameAddress); // 도로명주소에 해당하는 매물 삭제
 
 }
