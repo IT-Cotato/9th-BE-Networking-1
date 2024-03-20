@@ -4,5 +4,5 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface ExcelManageService {
 
-  public void upload(MultipartFile file);
+  void upload(MultipartFile file);
 }
