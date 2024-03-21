@@ -32,25 +32,32 @@ public class PropertyService {
         Workbook workbook = new XSSFWorkbook(file.getInputStream());
         Sheet sheet = workbook.getSheetAt(0);
         for (Row row : sheet) {
-            if (row.getRowNum() == 0) continue; // 헤더 건너뛰기
+            if (row.getRowNum() == 0) continue;
+
             Property property = new Property();
             property.setZipCode(row.getCell(0).getStringCellValue());
-            property.setRoadAddress(
-                    row.getCell(1).getStringCellValue() + " " +
-                    row.getCell(2).getStringCellValue() + " " +
-                    row.getCell(3).getStringCellValue() + " " +
-                    numericToString(row.getCell(4)) + "-" +
-                    numericToString(row.getCell(5)));
-            property.setLotNumberAddress(
-                    row.getCell(1).getStringCellValue() + " " +
-                    row.getCell(2).getStringCellValue() + " " +
-                    row.getCell(6).getStringCellValue() + " " +
-                    numericToString(row.getCell(7)) + "-" +
-                    numericToString(row.getCell(8)));
+
+            StringBuilder roadAddress = new StringBuilder();
+            roadAddress.append(row.getCell(1).getStringCellValue()).append(" ")
+                    .append(row.getCell(2).getStringCellValue()).append(" ")
+                    .append(row.getCell(3).getStringCellValue()).append(" ")
+                    .append(numericToString(row.getCell(4))).append("-")
+                    .append(numericToString(row.getCell(5)));
+            property.setRoadAddress(roadAddress.toString());
+
+            StringBuilder lotNumberAddress = new StringBuilder();
+            lotNumberAddress.append(row.getCell(1).getStringCellValue()).append(" ")
+                    .append(row.getCell(2).getStringCellValue()).append(" ")
+                    .append(row.getCell(6).getStringCellValue()).append(" ")
+                    .append(numericToString(row.getCell(7))).append("-")
+                    .append(numericToString(row.getCell(8)));
+            property.setLotNumberAddress(lotNumberAddress.toString());
+
             properties.add(property);
         }
         return properties;
     }
+
 
     private String numericToString(Cell cell) {
         if (cell == null || cell.getCellType() == CellType.BLANK) {
