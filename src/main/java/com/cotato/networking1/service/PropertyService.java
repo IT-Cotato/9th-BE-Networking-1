@@ -54,26 +54,26 @@ public class PropertyService {
 
     private String numericToString(Cell cell) {
         if (cell == null || cell.getCellType() == CellType.BLANK) {
-            return ""; // 셀이 null이거나 비어 있으면 빈 문자열을 반환
+            throw new IllegalArgumentException("Cell is null or blank");
         }
-        // 셀 타입 확인 후 적절한 처리
+
         if (cell.getCellType() == CellType.NUMERIC) {
             double numericValue = cell.getNumericCellValue();
-            long longValue = (long) numericValue; // 숫자를 정수로 변환
-            return String.valueOf(longValue); // 변환된 값을 문자열로 반환
+            long longValue = (long) numericValue;
+            return String.valueOf(longValue);
         } else if (cell.getCellType() == CellType.STRING) {
-            return cell.getStringCellValue(); // 문자열 셀이면 그대로 반환
+            try {
+                double numericValue = Double.parseDouble(cell.getStringCellValue());
+                long longValue = (long) numericValue;
+                return String.valueOf(longValue);
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("String cell contains non-numeric value");
+            }
+        } else {
+            throw new IllegalArgumentException("Unsupported cell type: " + cell.getCellType());
         }
-        return ""; // 그 외 셀 타입은 빈 문자열 반환 또는 다른 로직 적용
     }
 
-
-//    //row의 cell을 받아와서 numeric value를 String으로 바꾸어주는 함수
-//    private String numericToString(Cell cell) {
-//        double numericValue = cell.getNumericCellValue();
-//        int intValue = (int) numericValue;
-//        return Integer.toString(intValue);
-//    }
 
     public List<Property> findPropertiesByZipCode(String zipCode) {
         return propertyRepository.findByZipCode(zipCode);
