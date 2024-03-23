@@ -33,31 +33,54 @@ public class PropertyService {
         Workbook workbook = new XSSFWorkbook(file.getInputStream());
         Sheet sheet = workbook.getSheetAt(0);
         for (Row row : sheet) {
-            if (row.getRowNum() == 0) continue;
+            if (row.getRowNum() == 0) continue; // 헤더 스킵
 
             Property property = new Property();
-            property.setZipCode(row.getCell(0).getStringCellValue());
+            property.setZipCode(readCellAsString(row.getCell(0)));
 
             StringBuilder roadAddress = new StringBuilder();
-            roadAddress.append(row.getCell(1).getStringCellValue()).append(" ")
-                    .append(row.getCell(2).getStringCellValue()).append(" ")
-                    .append(row.getCell(3).getStringCellValue()).append(" ")
-                    .append(numericToString(row.getCell(4))).append("-")
-                    .append(numericToString(row.getCell(5)));
+            roadAddress.append(readCellAsString(row.getCell(1))).append(" ")
+                    .append(readCellAsString(row.getCell(2))).append(" ")
+                    .append(readCellAsString(row.getCell(3))).append(" ")
+                    .append(numericToStringSafe(row.getCell(4)));
+
+            // 건물번호 부번 없는 경우 처리
+            String cell5Value = numericToStringSafe(row.getCell(5));
+            if (!cell5Value.isEmpty()) {
+                roadAddress.append("-").append(cell5Value);
+            }
+
             property.setRoadAddress(roadAddress.toString());
 
             StringBuilder lotNumberAddress = new StringBuilder();
-            lotNumberAddress.append(row.getCell(1).getStringCellValue()).append(" ")
-                    .append(row.getCell(2).getStringCellValue()).append(" ")
-                    .append(row.getCell(6).getStringCellValue()).append(" ")
-                    .append(numericToString(row.getCell(7))).append("-")
-                    .append(numericToString(row.getCell(8)));
+            lotNumberAddress.append(readCellAsString(row.getCell(1))).append(" ")
+                    .append(readCellAsString(row.getCell(2))).append(" ")
+                    .append(readCellAsString(row.getCell(6))).append(" ")
+                    .append(numericToStringSafe(row.getCell(7))).append("-")
+                    .append(numericToStringSafe(row.getCell(8)));
             property.setLotNumberAddress(lotNumberAddress.toString());
 
             properties.add(property);
         }
         return properties;
     }
+
+    private String readCellAsString(Cell cell) {
+        try {
+            return cell == null || cell.getCellType() == CellType.BLANK ? "" : cell.toString().trim();
+        } catch (Exception e) {
+            return ""; // 값이 없거나 읽을 수 없는 경우 빈 문자열 반환
+        }
+    }
+
+    private String numericToStringSafe(Cell cell) {
+        try {
+            return numericToString(cell);
+        } catch (IllegalArgumentException e) {
+            return ""; // 지정된 예외 발생시 빈 문자열 반환
+        }
+    }
+
 
     private String numericToString(Cell cell) {
         if (cell == null || cell.getCellType() == CellType.BLANK) {
