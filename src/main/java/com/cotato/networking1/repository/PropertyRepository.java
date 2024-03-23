@@ -11,4 +11,6 @@ public interface PropertyRepository extends JpaRepository<Property, Long> {
 
     List<Property> findByZipCode(String zipCode);
 
+    List<Property> findByRoadAddress(String roadAddress);
+
 }

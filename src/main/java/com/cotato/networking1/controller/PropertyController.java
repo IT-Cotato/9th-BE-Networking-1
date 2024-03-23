@@ -54,4 +54,18 @@ public class PropertyController {
         Property savedProperty = propertyService.saveProperty(property);
         return ResponseEntity.ok().body(Map.of("id", savedProperty.getId()));
     }
+
+    @DeleteMapping("/properties")
+    public ResponseEntity<?> deletePropertyByRoadNameAddress(@RequestParam("road-name-address") String roadAddress) {
+        try {
+            List<Long> deletedIds = propertyService.deletePropertiesByRoadAddress(roadAddress);
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", deletedIds.size() + " properties with road address '" + roadAddress + "' have been deleted successfully.");
+            response.put("deletedIds", deletedIds);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Could not delete the properties: " + e.getMessage());
+        }
+    }
+
 }

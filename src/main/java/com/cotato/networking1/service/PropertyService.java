@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -58,7 +59,6 @@ public class PropertyService {
         return properties;
     }
 
-
     private String numericToString(Cell cell) {
         if (cell == null || cell.getCellType() == CellType.BLANK) {
             throw new IllegalArgumentException("Cell is null or blank");
@@ -81,9 +81,18 @@ public class PropertyService {
         }
     }
 
-
     public List<Property> findPropertiesByZipCode(String zipCode) {
         return propertyRepository.findByZipCode(zipCode);
     }
+
+    public List<Long> deletePropertiesByRoadAddress(String roadAddress) {
+        List<Property> properties = propertyRepository.findByRoadAddress(roadAddress);
+        List<Long> deletedIds = properties.stream()
+                .map(Property::getId)
+                .collect(Collectors.toList()); // 삭제될 매물의 ID 수집
+        propertyRepository.deleteAll(properties); // 매물 삭제
+        return deletedIds; // 삭제된 매물의 ID 반환
+    }
+
 
 }
