@@ -36,7 +36,7 @@ public class ExcelParsingService {
         for(int rowIndex = 1; rowIndex < rows; rowIndex++) {
             Row row = sheet.getRow(rowIndex);
 
-            String postalCode = row.getCell(0).getStringCellValue();
+            String zipCode = row.getCell(0).getStringCellValue();
             String city = row.getCell(1).getStringCellValue();
             String district = row.getCell(2).getStringCellValue();
             String roadName = row.getCell(3).getStringCellValue();
@@ -56,12 +56,12 @@ public class ExcelParsingService {
 
             String roadNameAddress = city + " " + district + " " + roadName + " " + buildingNum
                     + (buildingNumSub.equals("") ? "" : "-") + buildingNumSub;
-            String landLotNumAddress = city + " " + district + " " + dong + " " + landLotNum + "-" + landLotNumSub;
+            String landLotNameAddress = city + " " + district + " " + dong + " " + landLotNum + "-" + landLotNumSub;
 
             propertyList.add(Property.builder()
-                    .postalCode(postalCode)
+                    .zipCode(zipCode)
                     .roadNameAddress(roadNameAddress)
-                    .landLotNumAddress(landLotNumAddress)
+                    .landLotNameAddress(landLotNameAddress)
                     .build());
         }
         propertyRepository.saveAll(propertyList);

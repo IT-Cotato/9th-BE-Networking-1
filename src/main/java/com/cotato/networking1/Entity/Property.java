@@ -16,17 +16,17 @@ public class Property {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String postalCode;
+    private String zipCode;
 
     private String roadNameAddress;
 
-    private String landLotNumAddress;
+    private String landLotNameAddress;
 
     @Builder
-    private Property(Long id, String postalCode, String roadNameAddress, String landLotNumAddress){
+    private Property(Long id, String zipCode, String roadNameAddress, String landLotNameAddress){
         this.id = id;
-        this.postalCode = postalCode;
+        this.zipCode = zipCode;
         this.roadNameAddress = roadNameAddress;
-        this.landLotNumAddress = landLotNumAddress;
+        this.landLotNameAddress = landLotNameAddress;
     }
 }

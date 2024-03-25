@@ -21,7 +21,7 @@ public class ExcelParsingController {
 
     private final ExcelParsingService excelParsingService;
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity insertTestData() throws InvalidFormatException, IOException {
         excelParsingService.upload();
         return new ResponseEntity(HttpStatus.OK);
