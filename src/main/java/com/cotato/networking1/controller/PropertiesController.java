@@ -5,11 +5,9 @@ import com.cotato.networking1.domain.entity.Property;
 import com.cotato.networking1.dto.PropertyDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.cotato.networking1.service.PropertiesService;
 
 import java.util.List;
@@ -39,4 +37,12 @@ public class PropertiesController {
                 .collect(Collectors.toList());
         return ResponseEntity.ok().body(Map.of("properties", propertyDTOs));
     }
+
+    @PostMapping("/api/properties")
+    public ResponseEntity<Object> addProperty(@RequestBody PropertyDTO propertyDTO) {
+        Long propertyId = propertiesService.addProperty(propertyDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("id", propertyId));
+    }
+
+
 }
