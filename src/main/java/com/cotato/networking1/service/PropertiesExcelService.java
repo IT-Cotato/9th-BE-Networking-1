@@ -1,15 +1,14 @@
-package service;
+package com.cotato.networking1.service;
 
 
-import domain.entity.Property;
-import domain.repository.PropertiesRepository;
+import com.cotato.networking1.domain.entity.Property;
+import com.cotato.networking1.domain.repository.PropertiesRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.io.File;
@@ -24,7 +23,7 @@ public class PropertiesExcelService {
     private final PropertiesRepository propertiesRepository;
 
     @Transactional
-    public String insertPropertyTestData(String path) {
+    public String insertPropertyData(String path) {
         try {
             OPCPackage opcPackage = OPCPackage.open(new File(path));
             XSSFWorkbook workbook = new XSSFWorkbook(opcPackage);
@@ -41,20 +40,22 @@ public class PropertiesExcelService {
                 String buildingNum = String.valueOf((int) row.getCell(4).getNumericCellValue());
                 String buildingNumSub = row.getCell(5) != null ? String.valueOf((int) row.getCell(5).getNumericCellValue()) : "";
                 String area = row.getCell(6).getStringCellValue();
+
                 String addressNum = String.valueOf((int) row.getCell(7).getNumericCellValue());
                 String addressNumSub = String.valueOf((int) row.getCell(8).getNumericCellValue());
                 String roadNameAddress = province + ' ' + district + ' ' + roadName + ' ' +
                         buildingNum + (buildingNumSub.equals("") ? "" : '-') + buildingNumSub;
                 String landLotNameAddress = province + ' ' + district + ' ' + area + ' ' +
                         addressNum + '-' + addressNumSub;
+
                 propertyList.add(Property.builder()
                         .zipCode(zipCode)
                         .roadNameAddress(roadNameAddress)
-                        .landRoadNameAddress(landLotNameAddress)
+                        .landLotNameAddress(landLotNameAddress)
                         .build());
             }
             propertiesRepository.saveAll(propertyList);
-            //
+
 
             workbook.close();
             return "Success";
