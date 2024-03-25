@@ -6,8 +6,6 @@ import lombok.Getter;
 
 import java.util.List;
 
-@AllArgsConstructor
-@Getter
 public record PropertyListResponse(
         List<PropertyResponse> properties
 ) {
