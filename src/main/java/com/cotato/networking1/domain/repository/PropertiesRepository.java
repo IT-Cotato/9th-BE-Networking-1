@@ -12,4 +12,7 @@ public interface PropertiesRepository extends JpaRepository<Property, Long> {
 
 
     List<Property> findByZipCode(String zipCode);
+
+    Property findByRoadNameAddress(String roadNameAddress);
 }
+

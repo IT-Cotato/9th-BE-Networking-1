@@ -44,5 +44,12 @@ public class PropertiesController {
         return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("id", propertyId));
     }
 
+    @DeleteMapping("/api/properties")
+    public ResponseEntity<String> deletePropertyByRoadNameAddress(@RequestParam("road-name-address") String roadNameAddress) {
+        ResponseEntity<String> response = propertiesService.deletePropertyByRoadNameAddress(roadNameAddress);
+        return ResponseEntity.status(response.getStatusCode()).body(response.getBody());
+    }
+
+
 
 }
