@@ -32,4 +32,10 @@ public class PropertyController {
     public PropertyCreateResponseDTO createProperty(@RequestBody PropertyCreateDTO propertyCreateDTO){
         return propertyService.create(propertyCreateDTO);
     }
+
+    @DeleteMapping
+    public ResponseEntity deleteByRoadNameAddress(@RequestParam("road-name-address") String roadNameAddress){
+        propertyService.delete(roadNameAddress);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
 }

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,6 +27,7 @@ public class PropertyService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public PropertyCreateResponseDTO create(PropertyCreateDTO propertyCreateDTO){
         Property property = Property.builder()
                 .zipCode(propertyCreateDTO.getZipCode())
@@ -35,5 +37,10 @@ public class PropertyService {
 
         propertyRepository.save(property);
         return PropertyCreateResponseDTO.register(property.getId());
+    }
+
+    @Transactional
+    public void delete(String roadNameAddress){
+        propertyRepository.deleteByRoadNameAddress(roadNameAddress);
     }
 }
