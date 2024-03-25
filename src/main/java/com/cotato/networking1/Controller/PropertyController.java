@@ -23,19 +23,19 @@ public class PropertyController {
     private final PropertyService propertyService;
 
     @GetMapping
-    public PropertyListResponseDTO getAllByZipCode(@RequestParam("zip-code") String zipCode){
-        List<PropertyResponseDTO> all = propertyService.getList(zipCode);
+    public PropertyListResponseDTO getList(@RequestParam("zip-code") String zipCode){
+        List<PropertyResponseDTO> all = propertyService.getAllByZipCode(zipCode);
         return new PropertyListResponseDTO(all);
     }
 
     @PostMapping
-    public PropertyCreateResponseDTO createProperty(@RequestBody PropertyCreateDTO propertyCreateDTO){
-        return propertyService.create(propertyCreateDTO);
+    public PropertyCreateResponseDTO create(@RequestBody PropertyCreateDTO propertyCreateDTO){
+        return propertyService.createProperty(propertyCreateDTO);
     }
 
     @DeleteMapping
-    public ResponseEntity deleteByRoadNameAddress(@RequestParam("road-name-address") String roadNameAddress){
-        propertyService.delete(roadNameAddress);
+    public ResponseEntity delete(@RequestParam("road-name-address") String roadNameAddress){
+        propertyService.deleteByRoadNameAddress(roadNameAddress);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }

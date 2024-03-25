@@ -7,7 +7,6 @@ import com.cotato.networking1.Entity.Property;
 import com.cotato.networking1.Repository.PropertyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,14 +20,14 @@ public class PropertyService {
 
     private final PropertyRepository propertyRepository;
 
-    public List<PropertyResponseDTO> getList(String zipCode){
+    public List<PropertyResponseDTO> getAllByZipCode(String zipCode){
         return propertyRepository.findByZipCode(zipCode).stream()
                 .map(PropertyResponseDTO::new)
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public PropertyCreateResponseDTO create(PropertyCreateDTO propertyCreateDTO){
+    public PropertyCreateResponseDTO createProperty(PropertyCreateDTO propertyCreateDTO){
         Property property = Property.builder()
                 .zipCode(propertyCreateDTO.getZipCode())
                 .roadNameAddress(propertyCreateDTO.getRoadNameAddress())
@@ -40,7 +39,7 @@ public class PropertyService {
     }
 
     @Transactional
-    public void delete(String roadNameAddress){
+    public void deleteByRoadNameAddress(String roadNameAddress){
         propertyRepository.deleteByRoadNameAddress(roadNameAddress);
     }
 }
