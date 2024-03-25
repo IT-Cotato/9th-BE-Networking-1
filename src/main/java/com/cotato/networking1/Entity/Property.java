@@ -20,13 +20,13 @@ public class Property {
 
     private String roadNameAddress;
 
-    private String parcelAddress;
+    private String landLotNumAddress;
 
     @Builder
-    private Property(Long id, String postalCode, String roadNameAddress, String parcelAddress){
+    private Property(Long id, String postalCode, String roadNameAddress, String landLotNumAddress){
         this.id = id;
         this.postalCode = postalCode;
         this.roadNameAddress = roadNameAddress;
-        this.parcelAddress = parcelAddress;
+        this.landLotNumAddress = landLotNumAddress;
     }
 }
