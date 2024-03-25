@@ -1,10 +1,14 @@
 package com.cotato.networking1.Controller;
 
+import com.cotato.networking1.DTO.Request.PropertyCreateDTO;
 import com.cotato.networking1.DTO.Response.PropertyListResponseDTO;
 import com.cotato.networking1.DTO.Response.PropertyResponseDTO;
 import com.cotato.networking1.Service.PropertyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,5 +25,11 @@ public class PropertyController {
     public PropertyListResponseDTO getAllByZipCode(@RequestParam("zip-code") String zipCode){
         List<PropertyResponseDTO> all = propertyService.getList(zipCode);
         return new PropertyListResponseDTO(all);
+    }
+
+    @PostMapping
+    public ResponseEntity createProperty(@RequestBody PropertyCreateDTO propertyCreateDTO){
+        propertyService.create(propertyCreateDTO);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 }
