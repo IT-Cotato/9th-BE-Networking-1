@@ -32,4 +32,12 @@ public class PropertyService {
         propertyRepository.save(createdProperty);
         return new CreatePropertyResponse(createdProperty.getId());
     }
+
+    @Transactional
+    public void deleteProperty(String roadNameAddress) {
+        List<Long> ids = propertyRepository.findAllByRoadNameAddress(roadNameAddress).stream()
+                .map(Property::getId)
+                .toList();
+        propertyRepository.deleteAllByRoadNameAddressInQuery(ids);
+    }
 }

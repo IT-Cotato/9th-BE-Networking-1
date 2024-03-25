@@ -6,9 +6,9 @@ import com.cotato.networking1.api.dto.FindPropertiesResponse;
 import com.cotato.networking1.domain.service.PropertyService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,5 +31,11 @@ public class PropertyController {
     @PostMapping("/properties")
     public ResponseEntity<CreatePropertyResponse> createProperty(@RequestBody @Valid CreatePropertyRequest request){
         return ResponseEntity.status(HttpStatus.CREATED).body(propertyService.createProperty(request));
+    }
+
+    @DeleteMapping("/properties")
+    public ResponseEntity<?> deleteProperty(@RequestParam("road-name-address") String roadNameAddress){
+        propertyService.deleteProperty(roadNameAddress);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
