@@ -60,7 +60,8 @@ public class ExcelParsingService {
         Cell dong = row.getCell(DONG_NAME_CELL);
         Cell lotMain = row.getCell(LOT_MAIN_CELL);
         Cell lotSub = row.getCell(LOT_SUB_CELL);
-        return dong.getStringCellValue() + " " + lotMain.getNumericCellValue() + "-" + lotSub.getNumericCellValue();
+        return dong.getStringCellValue() + " " + (int) lotMain.getNumericCellValue() + "-"
+                + (int) lotSub.getNumericCellValue();
     }
 
     private String getRoadNameAddress(Row row) {
