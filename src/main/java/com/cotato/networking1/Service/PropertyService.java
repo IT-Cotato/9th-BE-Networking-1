@@ -1,6 +1,7 @@
 package com.cotato.networking1.Service;
 
 import com.cotato.networking1.DTO.Request.PropertyCreateDTO;
+import com.cotato.networking1.DTO.Response.PropertyCreateResponseDTO;
 import com.cotato.networking1.DTO.Response.PropertyResponseDTO;
 import com.cotato.networking1.Entity.Property;
 import com.cotato.networking1.Repository.PropertyRepository;
@@ -25,7 +26,7 @@ public class PropertyService {
                 .collect(Collectors.toList());
     }
 
-    public void create(PropertyCreateDTO propertyCreateDTO){
+    public PropertyCreateResponseDTO create(PropertyCreateDTO propertyCreateDTO){
         Property property = Property.builder()
                 .zipCode(propertyCreateDTO.getZipCode())
                 .roadNameAddress(propertyCreateDTO.getRoadNameAddress())
@@ -33,5 +34,6 @@ public class PropertyService {
                 .build();
 
         propertyRepository.save(property);
+        return PropertyCreateResponseDTO.register(property.getId());
     }
 }

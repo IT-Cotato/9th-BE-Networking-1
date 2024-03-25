@@ -1,6 +1,7 @@
 package com.cotato.networking1.Controller;
 
 import com.cotato.networking1.DTO.Request.PropertyCreateDTO;
+import com.cotato.networking1.DTO.Response.PropertyCreateResponseDTO;
 import com.cotato.networking1.DTO.Response.PropertyListResponseDTO;
 import com.cotato.networking1.DTO.Response.PropertyResponseDTO;
 import com.cotato.networking1.Service.PropertyService;
@@ -28,8 +29,7 @@ public class PropertyController {
     }
 
     @PostMapping
-    public ResponseEntity createProperty(@RequestBody PropertyCreateDTO propertyCreateDTO){
-        propertyService.create(propertyCreateDTO);
-        return new ResponseEntity(HttpStatus.CREATED);
+    public PropertyCreateResponseDTO createProperty(@RequestBody PropertyCreateDTO propertyCreateDTO){
+        return propertyService.create(propertyCreateDTO);
     }
 }
