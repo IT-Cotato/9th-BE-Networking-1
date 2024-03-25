@@ -1,5 +1,9 @@
 package com.cotato.networking1.service;
 
+import com.cotato.networking1.domain.dto.PropertyListResponse;
+import com.cotato.networking1.domain.dto.PropertyRegisterRequest;
+import com.cotato.networking1.domain.dto.PropertyRegisterResponse;
+import com.cotato.networking1.domain.dto.PropertyResponse;
 import com.cotato.networking1.domain.enttiy.Property;
 import com.cotato.networking1.repository.PropertyRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,13 +18,18 @@ public class PropertyService {
 
     private final PropertyRepository propertyRepository;
 
-    public List<Property> getAllByZipCode(String zipCode) {
-        return propertyRepository.findAllByZipCode(zipCode);
+    public PropertyListResponse getAllByZipCode(String zipCode) {
+        List<PropertyResponse> properties = propertyRepository.findAllByZipCode(zipCode)
+                .stream()
+                .map(PropertyResponse::from)
+                .toList();
+        return PropertyListResponse.from(properties);
     }
 
     @Transactional
-    public Long registerProperty(Property property) {
-        return propertyRepository.save(property).getId();
+    public PropertyRegisterResponse registerProperty(PropertyRegisterRequest propertyRegisterRequest) {
+        Property property = propertyRepository.save(Property.of(propertyRegisterRequest));
+        return new PropertyRegisterResponse(property.getId());
     }
 
     @Transactional

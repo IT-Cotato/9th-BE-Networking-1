@@ -1,5 +1,6 @@
 package com.cotato.networking1.domain.enttiy;
 
+import com.cotato.networking1.domain.dto.PropertyRegisterRequest;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,4 +18,11 @@ public class Property {
     private String roadNameAddress;
     private String landLotNameAddress;
 
+    public static Property of(PropertyRegisterRequest propertyRegisterRequest) {
+        return Property.builder()
+                .landLotNameAddress(propertyRegisterRequest.landLotNameAddress())
+                .zipCode(propertyRegisterRequest.zipCode())
+                .roadNameAddress(propertyRegisterRequest.roadNameAddress())
+                .build();
+    }
 }

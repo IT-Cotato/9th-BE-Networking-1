@@ -8,6 +8,10 @@ import java.util.List;
 
 @AllArgsConstructor
 @Getter
-public class PropertyListResponse {
-    List<Property> properties;
+public record PropertyListResponse(
+        List<PropertyResponse> properties
+) {
+    public static PropertyListResponse from(List<PropertyResponse> properties) {
+        return new PropertyListResponse(properties);
+    }
 }

@@ -1,6 +1,7 @@
 package com.cotato.networking1.controller;
 
 import com.cotato.networking1.domain.dto.PropertyListResponse;
+import com.cotato.networking1.domain.dto.PropertyRegisterRequest;
 import com.cotato.networking1.domain.dto.PropertyRegisterResponse;
 import com.cotato.networking1.domain.enttiy.Property;
 import com.cotato.networking1.service.PropertyService;
@@ -20,12 +21,12 @@ public class PropertyController {
 
     @GetMapping()
     public ResponseEntity<PropertyListResponse> getAllByZipCode(@RequestParam("zip-code") String zipCode) {
-        return ResponseEntity.status(HttpStatus.OK).body(new PropertyListResponse(propertyService.getAllByZipCode(zipCode)));
+        return ResponseEntity.status(HttpStatus.OK).body(propertyService.getAllByZipCode(zipCode));
     }
 
     @PostMapping()
-    public ResponseEntity<PropertyRegisterResponse> registerProperty(@RequestBody Property property) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(new PropertyRegisterResponse(propertyService.registerProperty(property)));
+    public ResponseEntity<PropertyRegisterResponse> registerProperty(@RequestBody PropertyRegisterRequest property) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(propertyService.registerProperty(property));
     }
 
     @DeleteMapping()
