@@ -26,6 +26,12 @@ public class PropertyController {
 
     @GetMapping
     public ResponseEntity<List<Property>> getProperties(){
-        return new ResponseEntity<>(propertyService.getProperties(), HttpStatus.FOUND);
+        return new ResponseEntity<>(propertyService.getAllProperties(), HttpStatus.FOUND);
     }
+
+    @GetMapping("/properties")
+    public ResponseEntity<List<Property>> getPropertiesByZipCode(@RequestParam("zip-code") String zipCode){
+        return new ResponseEntity<>(propertyService.getPropertiesByZipCode(zipCode), HttpStatus.FOUND);
+    }
+
 }

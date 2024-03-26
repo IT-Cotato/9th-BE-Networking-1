@@ -24,7 +24,11 @@ public class PropertyService {
             }
         }
     }
-    public List<Property> getProperties(){
+    public List<Property> getAllProperties(){
         return propertyRepository.findAll();
+    }
+
+    public List<Property> getPropertiesByZipCode(String zipCode){
+        return propertyRepository.findAllByZipCode(zipCode);
     }
 }
