@@ -1,6 +1,8 @@
 package com.cotato.networking1.controller;
 
 import com.cotato.networking1.domain.Property;
+import com.cotato.networking1.dto.PropertyDtoReq;
+import com.cotato.networking1.dto.PropertyDtoRes;
 import com.cotato.networking1.service.PropertyService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -32,6 +34,11 @@ public class PropertyController {
     @GetMapping("/properties")
     public ResponseEntity<List<Property>> getPropertiesByZipCode(@RequestParam("zip-code") String zipCode){
         return new ResponseEntity<>(propertyService.getPropertiesByZipCode(zipCode), HttpStatus.FOUND);
+    }
+
+    @PostMapping("/properties")
+    public ResponseEntity<PropertyDtoRes> createProperty(@RequestBody PropertyDtoReq propertyReq){
+        return ResponseEntity.status(HttpStatus.CREATED).body(propertyService.createProperty(propertyReq));
     }
 
 }
