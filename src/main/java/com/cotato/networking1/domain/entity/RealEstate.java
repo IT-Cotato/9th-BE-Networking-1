@@ -14,8 +14,14 @@ public class RealEstate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pk")
     private Long id;
+
+    @Column(nullable = false)
     private String zipCode;
+
+    @Column(nullable=false)
     private String roadNameAddress;
+
+    @Column(nullable=false)
     private String locationAddress;
 
 }

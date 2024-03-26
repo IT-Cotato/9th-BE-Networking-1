@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class IdResponseDTO {
+public class ResponseDTO {
     private Long id;
 }
