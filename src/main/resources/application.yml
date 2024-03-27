@@ -4,7 +4,7 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${DB_URI}
+    url: jdbc:mysql://localhost:3306/real_estate
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
 
