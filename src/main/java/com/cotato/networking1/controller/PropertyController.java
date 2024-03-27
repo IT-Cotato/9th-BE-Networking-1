@@ -17,7 +17,7 @@ public class PropertyController {
     private final PropertyService propertyService;
 
     @GetMapping("/properties")
-    public ResponseEntity<FindPropertyResponse> findProperty(@RequestParam String zipCode){
+    public ResponseEntity<FindPropertyResponse> findProperty(@RequestParam(name = "zip-code") String zipCode){
         return ResponseEntity.status(HttpStatus.OK).body(propertyService.findProperties(zipCode));
     }
 

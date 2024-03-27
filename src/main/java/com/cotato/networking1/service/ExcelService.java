@@ -23,7 +23,7 @@ public class ExcelService {
     private final PropertyRepository propertyRepository;
 
     @Transactional
-    public void parsingTestData(MultipartFile multipartFile) throws IOException {
+    public void parsingTestData(MultipartFile multipartFile) throws IOException{
 
         List<String> propertyList = new ArrayList<>();
 
