@@ -18,6 +18,7 @@ public class PropertyService {
         return propertyRepository.findAllByZipCode(zipCode);
     }
 
+    @Transactional
     public Long registerProperty(Property property) {
         return propertyRepository.save(property).getId();
     }
