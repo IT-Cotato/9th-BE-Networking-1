@@ -16,4 +16,8 @@ public class PropertyService {
     public List<Property> getAllByZipCode(String zipCode) {
         return propertyRepository.findAllByZipCode(zipCode);
     }
+
+    public Long registerProperty(Property property) {
+        return propertyRepository.save(property).getId();
+    }
 }
