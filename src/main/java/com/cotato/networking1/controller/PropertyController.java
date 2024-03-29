@@ -24,5 +24,6 @@ public class PropertyController {
     @PostMapping()
     public ResponseEntity<PropertyRegisterResponse> registerProperty(@RequestBody Property property) {
         return ResponseEntity.ok(new PropertyRegisterResponse(propertyService.registerProperty(property)));
+    @DeleteMapping()
     }
 }

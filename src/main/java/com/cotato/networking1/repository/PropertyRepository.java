@@ -8,4 +8,5 @@ import java.util.List;
 public interface PropertyRepository extends JpaRepository<Property, Long> {
 
     public List<Property> findAllByZipCode(String zipCode);
+    public void deleteByRoadNameAddress(String roadNameAddress);
 }

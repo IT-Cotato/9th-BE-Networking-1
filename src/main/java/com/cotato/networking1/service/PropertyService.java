@@ -20,4 +20,9 @@ public class PropertyService {
     public Long registerProperty(Property property) {
         return propertyRepository.save(property).getId();
     }
+
+    @Transactional
+    public void deleteByRoadNameAddress(String roadNameAddress) {
+        propertyRepository.deleteByRoadNameAddress(roadNameAddress);
+    }
 }
