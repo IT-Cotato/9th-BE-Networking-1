@@ -1,4 +1,4 @@
-package com.cotato.networking1.domain;
+package com.cotato.networking1.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
