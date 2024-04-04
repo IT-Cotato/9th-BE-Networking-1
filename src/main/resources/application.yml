@@ -2,12 +2,12 @@ spring:
   application:
     name: networking1
 
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${DB_URI}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
-
+  h2:
+    datasource:
+      driver-class-name: org.h2.Driver  # Database를 H2로 사용하겠다.
+      url: jdbc:h2:~/cotatoo
+      username: sa  # H2 접속 시 입력할 username 정보 (원하는 것으로 입력)
+      password:  # H2 접속 시 입력할 password 정보 (원하는 것으로 입력)
   jpa:
     hibernate:
       ddl-auto: update
