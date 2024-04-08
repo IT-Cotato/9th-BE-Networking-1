@@ -37,4 +37,5 @@ public class RealEstateService {
     public void deleteByRoadNameAddress(String roadNameAddress){
         realEstateRepository.deleteByRoadNameAddress(roadNameAddress);
     }
+
 }

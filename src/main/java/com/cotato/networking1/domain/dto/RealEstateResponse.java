@@ -1,8 +1,6 @@
 package com.cotato.networking1.domain.dto;
 
 import com.cotato.networking1.domain.entity.RealEstate;
-import lombok.*;
-
 
 public record RealEstateResponse(
         Long id,
