@@ -3,7 +3,9 @@ package com.cotato.networking1.utility;
 import com.cotato.networking1.enity.HouseDao;
 import com.cotato.networking1.repository.HouseRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
+@Component
 @RequiredArgsConstructor
 public class FindByUtil {
 
