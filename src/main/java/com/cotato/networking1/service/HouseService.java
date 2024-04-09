@@ -7,9 +7,9 @@ public interface HouseService  {
 
     public HouseDto houseCreateInformation(HouseDto houseDto);
 
-    public void houseInformationUpdate(HouseDto houseDto);
+    public void houseInformationUpdate(Long id,HouseDto houseDto);
 
-    public HouseDto houseInfo(HouseDto houseDto);
+    public HouseDto houseInfo(Long id);
 
-    public void houseRemove(HouseDto houseDto);
+    public void houseRemove(Long id);
 }
