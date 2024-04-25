@@ -79,7 +79,7 @@ public class PropertyTestDataService {
         propertyRepository.saveAll(propertyList);
 
         workbook.close();
-
+        opcPackage.close();
         return "Success";
     }
 }
