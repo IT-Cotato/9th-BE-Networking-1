@@ -1,5 +1,6 @@
 package com.cotato.networking1.controller;
 
+import com.cotato.networking1.dto.PropertyListResponse;
 import com.cotato.networking1.dto.PropertyPostRequestDto;
 import com.cotato.networking1.entity.Property;
 import com.cotato.networking1.service.PropertyService;
@@ -12,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -32,20 +32,8 @@ public class PropertyController {
     }
 
     @GetMapping("/properties")
-    public ResponseEntity<?> getPropertiesByZipCode(@RequestParam("zip-code") String zipCode) {
-        List<Property> properties = propertyService.findPropertiesByZipCode(zipCode);
-        List<Map<String, Object>> response = properties.stream().map(property -> {
-            Map<String, Object> map = new HashMap<>();
-            map.put("id", property.getId());
-            map.put("zipCode", property.getZipCode());
-            map.put("roadNameAddress", property.getRoadAddress());
-            map.put("landLotNameAddress", property.getLotNumberAddress());
-            return map;
-        }).collect(Collectors.toList());
-
-        Map<String, Object> responseBody = new HashMap<>();
-        responseBody.put("properties", response);
-        return ResponseEntity.ok(responseBody);
+    public ResponseEntity<PropertyListResponse> getPropertiesByZipCode(@RequestParam("zip-code") String zipCode) {
+        return ResponseEntity.ok(propertyService.findPropertiesByZipCode(zipCode));
     }
 
     @PostMapping("/properties")
@@ -56,11 +44,11 @@ public class PropertyController {
     }
 
     @DeleteMapping("/properties")
-    public ResponseEntity<?> deletePropertyByRoadNameAddress(@RequestParam("road-name-address") String roadAddress) {
+    public ResponseEntity<?> deletePropertyByRoadNameAddress(@RequestParam("road-name-address") String roadNameAddress) {
         try {
-            List<Long> deletedIds = propertyService.deletePropertiesByRoadAddress(roadAddress);
+            List<Long> deletedIds = propertyService.deletePropertiesByRoadAddress(roadNameAddress);
             Map<String, Object> response = new HashMap<>();
-            response.put("message", deletedIds.size() + " properties with road address '" + roadAddress + "' have been deleted successfully.");
+            response.put("message", deletedIds.size() + " properties with road address '" + roadNameAddress + "' have been deleted successfully.");
             response.put("deletedIds", deletedIds);
             return ResponseEntity.ok(response);
         } catch (Exception e) {

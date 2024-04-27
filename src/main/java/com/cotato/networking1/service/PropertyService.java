@@ -1,5 +1,7 @@
 package com.cotato.networking1.service;
 
+import com.cotato.networking1.dto.PropertyListResponse;
+import com.cotato.networking1.dto.PropertyResponse;
 import com.cotato.networking1.entity.Property;
 import com.cotato.networking1.repository.PropertyRepository;
 import lombok.RequiredArgsConstructor;
@@ -38,8 +40,8 @@ public class PropertyService {
             Property property = new Property();
             property.setZipCode(readCellAsString(row.getCell(0)));
 
-            StringBuilder roadAddress = new StringBuilder();
-            roadAddress.append(readCellAsString(row.getCell(1))).append(" ")
+            StringBuilder roadNameAddress = new StringBuilder();
+            roadNameAddress.append(readCellAsString(row.getCell(1))).append(" ")
                     .append(readCellAsString(row.getCell(2))).append(" ")
                     .append(readCellAsString(row.getCell(3))).append(" ")
                     .append(numericToStringSafe(row.getCell(4)));
@@ -47,18 +49,18 @@ public class PropertyService {
             // 건물번호 부번 없는 경우 처리
             String cell5Value = numericToStringSafe(row.getCell(5));
             if (!cell5Value.isEmpty()) {
-                roadAddress.append("-").append(cell5Value);
+                roadNameAddress.append("-").append(cell5Value);
             }
 
-            property.setRoadAddress(roadAddress.toString());
+            property.setRoadNameAddress(roadNameAddress.toString());
 
-            StringBuilder lotNumberAddress = new StringBuilder();
-            lotNumberAddress.append(readCellAsString(row.getCell(1))).append(" ")
+            StringBuilder landLotNameAddress = new StringBuilder();
+            landLotNameAddress.append(readCellAsString(row.getCell(1))).append(" ")
                     .append(readCellAsString(row.getCell(2))).append(" ")
                     .append(readCellAsString(row.getCell(6))).append(" ")
                     .append(numericToStringSafe(row.getCell(7))).append("-")
                     .append(numericToStringSafe(row.getCell(8)));
-            property.setLotNumberAddress(lotNumberAddress.toString());
+            property.setLandLotNameAddress(landLotNameAddress.toString());
 
             properties.add(property);
         }
@@ -104,12 +106,16 @@ public class PropertyService {
         }
     }
 
-    public List<Property> findPropertiesByZipCode(String zipCode) {
-        return propertyRepository.findByZipCode(zipCode);
+    public PropertyListResponse findPropertiesByZipCode(String zipCode) {
+        List<PropertyResponse> propertyResponses = propertyRepository.findAllByZipCode(zipCode)
+                .stream()
+                .map(PropertyResponse::from)
+                .toList();
+        return new PropertyListResponse(propertyResponses);
     }
 
     public List<Long> deletePropertiesByRoadAddress(String roadAddress) {
-        List<Property> properties = propertyRepository.findByRoadAddress(roadAddress);
+        List<Property> properties = propertyRepository.findByRoadNameAddress(roadAddress);
         List<Long> deletedIds = properties.stream()
                 .map(Property::getId)
                 .collect(Collectors.toList()); // 삭제될 매물의 ID 수집

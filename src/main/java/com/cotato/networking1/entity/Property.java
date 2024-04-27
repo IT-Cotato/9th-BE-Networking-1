@@ -17,15 +17,14 @@ public class Property {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String zipCode; // 우편번호
-    private String roadAddress; // 도로명 주소
-    private String lotNumberAddress; // 지번
+    private String roadNameAddress; // 도로명 주소
+    private String landLotNameAddress; // 지번
 
     public Property(String zipCode, String roadAddress, String lotNumberAddress) {
         this.zipCode = zipCode;
-        this.roadAddress = roadAddress;
-        this.lotNumberAddress = lotNumberAddress;
+        this.roadNameAddress = roadAddress;
+        this.landLotNameAddress = lotNumberAddress;
     }
 
     public static Property toProperty(PropertyPostRequestDto propertyPostRequestDto) {
