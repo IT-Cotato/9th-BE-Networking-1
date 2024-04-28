@@ -47,13 +47,12 @@ public class PropertyTestDataService {
 
             property.setRoadNameAddress(roadNameAddress.toString());
 
-            StringBuilder landLotNameAddress = new StringBuilder();
-            landLotNameAddress.append(readCellAsString(row.getCell(1))).append(" ")
-                    .append(readCellAsString(row.getCell(2))).append(" ")
-                    .append(readCellAsString(row.getCell(6))).append(" ")
-                    .append(numericToStringSafe(row.getCell(7))).append("-")
-                    .append(numericToStringSafe(row.getCell(8)));
-            property.setLandLotNameAddress(landLotNameAddress.toString());
+            String landLotNameAddress = readCellAsString(row.getCell(1)) + " " +
+                    readCellAsString(row.getCell(2)) + " " +
+                    readCellAsString(row.getCell(6)) + " " +
+                    numericToStringSafe(row.getCell(7)) + "-" +
+                    numericToStringSafe(row.getCell(8));
+            property.setLandLotNameAddress(landLotNameAddress);
 
             properties.add(property);
         }
