@@ -1,11 +1,12 @@
 package com.cotato.networking1.service;
 
-import com.cotato.networking1.dto.PropertyListResponse;
-import com.cotato.networking1.dto.PropertyResponse;
+import com.cotato.networking1.dto.*;
 import com.cotato.networking1.entity.Property;
 import com.cotato.networking1.repository.PropertyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,8 +16,10 @@ public class PropertyService {
 
     private final PropertyRepository propertyRepository;
 
-    public Property saveProperty(Property property) {
-        return propertyRepository.save(property);
+    @Transactional
+    public PropertyPostResponse saveProperty(PropertyPostRequest propertyPostRequest) {
+        Property property = propertyRepository.save(Property.toProperty(propertyPostRequest));
+        return new PropertyPostResponse(property.getId());
     }
 
     public PropertyListResponse findPropertiesByZipCode(String zipCode) {
@@ -27,14 +30,14 @@ public class PropertyService {
         return new PropertyListResponse(propertyResponses);
     }
 
-    public List<Long> deletePropertiesByRoadAddress(String roadAddress) {
-        List<Property> properties = propertyRepository.findByRoadNameAddress(roadAddress);
-        List<Long> deletedIds = properties.stream()
+    @Transactional
+    public PropertyDeleteListResponse deletePropertiesByRoadAddress(String roadAddress) {
+        List<Long> propertyDeleteIds = propertyRepository.findAllByRoadNameAddress(roadAddress)
+                .stream()
                 .map(Property::getId)
-                .collect(Collectors.toList()); // 삭제될 매물의 ID 수집
-        propertyRepository.deleteAll(properties); // 매물 삭제
-        return deletedIds; // 삭제된 매물의 ID 반환
+                .collect(Collectors.toList());
+
+        propertyRepository.deleteAllByIds(propertyDeleteIds);
+        return PropertyDeleteListResponse.from(propertyDeleteIds);
     }
-
-
 }

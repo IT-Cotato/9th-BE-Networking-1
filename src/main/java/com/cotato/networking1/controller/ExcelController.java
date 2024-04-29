@@ -1,4 +1,5 @@
 package com.cotato.networking1.controller;
+
 import com.cotato.networking1.service.PropertyTestDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

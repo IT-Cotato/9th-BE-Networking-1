@@ -1,6 +1,6 @@
 package com.cotato.networking1.entity;
 
-import com.cotato.networking1.dto.PropertyPostRequestDto;
+import com.cotato.networking1.dto.PropertyPostRequest;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,10 +27,10 @@ public class Property {
         this.landLotNameAddress = lotNumberAddress;
     }
 
-    public static Property toProperty(PropertyPostRequestDto propertyPostRequestDto) {
+    public static Property toProperty(PropertyPostRequest propertyPostRequest) {
         return new Property(
-                propertyPostRequestDto.getZipCode(),
-                propertyPostRequestDto.getRoadNameAddress(),
-                propertyPostRequestDto.getLandLotNameAddress());
+                propertyPostRequest.getZipCode(),
+                propertyPostRequest.getRoadNameAddress(),
+                propertyPostRequest.getLandLotNameAddress());
     }
 }

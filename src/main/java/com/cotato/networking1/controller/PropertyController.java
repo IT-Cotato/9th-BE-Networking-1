@@ -1,17 +1,12 @@
 package com.cotato.networking1.controller;
-
 import com.cotato.networking1.dto.PropertyListResponse;
-import com.cotato.networking1.dto.PropertyPostRequestDto;
-import com.cotato.networking1.entity.Property;
+import com.cotato.networking1.dto.PropertyPostRequest;
+import com.cotato.networking1.dto.PropertyPostResponse;
 import com.cotato.networking1.service.PropertyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,23 +21,16 @@ public class PropertyController {
     }
 
     @PostMapping()
-    public ResponseEntity<?> createProperty(@RequestBody PropertyPostRequestDto propertyPostRequestDto) {
-        Property property = Property.toProperty(propertyPostRequestDto);
-        Property savedProperty = propertyService.saveProperty(property);
-        return ResponseEntity.ok().body(Map.of("id", savedProperty.getId()));
+    public ResponseEntity<PropertyPostResponse> createProperty(@RequestBody PropertyPostRequest propertyPostRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(propertyService.saveProperty(propertyPostRequest));
     }
 
     @DeleteMapping()
     public ResponseEntity<?> deletePropertyByRoadNameAddress(@RequestParam("road-name-address") String roadNameAddress) {
         try {
-            List<Long> deletedIds = propertyService.deletePropertiesByRoadAddress(roadNameAddress);
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", deletedIds.size() + " properties with road address '" + roadNameAddress + "' have been deleted successfully.");
-            response.put("deletedIds", deletedIds);
-            return ResponseEntity.ok(response);
+            return ResponseEntity.ok(propertyService.deletePropertiesByRoadAddress(roadNameAddress));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Could not delete the properties: " + e.getMessage());
         }
     }
-
 }
