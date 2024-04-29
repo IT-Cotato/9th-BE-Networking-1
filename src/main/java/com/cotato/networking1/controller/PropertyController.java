@@ -27,10 +27,6 @@ public class PropertyController {
 
     @DeleteMapping()
     public ResponseEntity<?> deletePropertyByRoadNameAddress(@RequestParam("road-name-address") String roadNameAddress) {
-        try {
             return ResponseEntity.ok(propertyService.deletePropertiesByRoadAddress(roadNameAddress));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Could not delete the properties: " + e.getMessage());
-        }
     }
 }
