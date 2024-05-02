@@ -16,7 +16,7 @@ public class Property {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "property_id", nullable = false)
-    private Integer id;
+    private Long id;
     @Column(name = "post_code", nullable = false)
     private String postCode;
     @Column(name = "road_address", nullable = false)
