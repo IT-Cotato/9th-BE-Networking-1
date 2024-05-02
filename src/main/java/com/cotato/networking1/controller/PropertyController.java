@@ -18,7 +18,7 @@ public class PropertyController {
     private final PropertyService propertyService;
 
     @GetMapping("")
-    public ResponseEntity<FindPropertiesResponse> getPropertiesByPostCode(@RequestParam("post-code") String postCode) {
+    public ResponseEntity<FindPropertiesResponse> getPropertiesByPostCode(@RequestParam("zip-code") String postCode) {
         return ResponseEntity.ok(propertyService.findPropertiesByPostCode(postCode));
     }
 
