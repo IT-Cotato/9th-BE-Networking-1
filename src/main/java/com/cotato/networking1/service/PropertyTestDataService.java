@@ -1,6 +1,7 @@
 package com.cotato.networking1.service;
 
 import com.cotato.networking1.domain.enttiy.Property;
+import com.cotato.networking1.repository.PropertyBulkRepository;
 import com.cotato.networking1.repository.PropertyRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -20,18 +21,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PropertyTestDataService {
     private final PropertyRepository propertyRepository;
+    private final PropertyBulkRepository propertyBulkRepository;
 
-    @Transactional
-    public String insertPropertyTestData(String path) throws InvalidFormatException, IOException {
-        OPCPackage opcPackage = OPCPackage.open(new File(path));
-        XSSFWorkbook workbook = new XSSFWorkbook(opcPackage);
-
-        String sheetName = workbook.getSheetName(0);
-        Sheet sheet = workbook.getSheet(sheetName);
-
+    public List<Property> getPropertyListFromSheet(Sheet sheet) {
         int n = sheet.getPhysicalNumberOfRows();
 
-        List<Property> propertyList = new ArrayList<Property>();
+        List<Property> propertyList = new ArrayList<>();
 
         for (int i = 1; i < n; i++) {
             if (i % 10000 == 0) {
@@ -79,7 +74,37 @@ public class PropertyTestDataService {
                     .build());
         }
 
+        return propertyList;
+    }
+
+    @Transactional
+    public String insertPropertyTestData(String path) throws InvalidFormatException, IOException {
+        OPCPackage opcPackage = OPCPackage.open(new File(path));
+        XSSFWorkbook workbook = new XSSFWorkbook(opcPackage);
+
+        String sheetName = workbook.getSheetName(0);
+        Sheet sheet = workbook.getSheet(sheetName);
+
+        List<Property> propertyList = getPropertyListFromSheet(sheet);
+
         propertyRepository.saveAll(propertyList);
+
+        workbook.close();
+        opcPackage.close();
+        return "Success";
+    }
+
+    @Transactional
+    public String insertJdbcBatchPropertyTestData(String path) throws InvalidFormatException, IOException {
+        OPCPackage opcPackage = OPCPackage.open(new File(path));
+        XSSFWorkbook workbook = new XSSFWorkbook(opcPackage);
+
+        String sheetName = workbook.getSheetName(0);
+        Sheet sheet = workbook.getSheet(sheetName);
+
+        List<Property> propertyList = getPropertyListFromSheet(sheet);
+
+        propertyBulkRepository.saveAll(propertyList);
 
         workbook.close();
         opcPackage.close();
