@@ -35,4 +35,9 @@ public class PropertyService {
         Property property = propertyRepository.save(Property.of(registerNewPropertyRequest));
         return new RegisterNewPropertyResponse(property.getId());
     }
+
+    @Transactional
+    public void deleteProperty(String roadAddress) {
+        propertyRepository.deletePropertyByRoadAddress(roadAddress);
+    }
 }

@@ -26,4 +26,10 @@ public class PropertyController {
     public ResponseEntity<RegisterNewPropertyResponse> postProperty(@RequestBody RegisterNewPropertyRequest property) {
         return ResponseEntity.status(HttpStatus.CREATED).body(propertyService.postProperty(property));
     }
+
+    @DeleteMapping("")
+    public ResponseEntity<Void> deletePropertyByRoadAddress(@RequestParam("road-name-address") String roadAddress) {
+        propertyService.deleteProperty(roadAddress);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
