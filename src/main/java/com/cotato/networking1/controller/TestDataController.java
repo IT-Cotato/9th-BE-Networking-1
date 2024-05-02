@@ -19,6 +19,12 @@ public class TestDataController {
 
     @PostMapping("")
     public ResponseEntity<String> insertPropertyTestData() throws IOException, InvalidFormatException {
-        return ResponseEntity.ok(propertyTestDataService.insertPropertyTestData("C:\\Users\\MINUK\\Desktop\\networking\\9th-BE-Networking-1\\_.1 (1).xlsx"));
+        long beforeTime = System.currentTimeMillis();
+        String result = propertyTestDataService.insertPropertyTestData("C:\\Users\\MINUK\\Desktop\\networking\\9th-BE-Networking-1\\서울시_20만개 (1).xlsx");
+        long afterTime = System.currentTimeMillis();
+        long secDiffTime = (afterTime - beforeTime) / 1000;
+
+        System.out.println("소요시간 : " + secDiffTime + "초");
+        return ResponseEntity.ok(result);
     }
 }
