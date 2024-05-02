@@ -1,6 +1,7 @@
 package com.cotato.networking1.domain;
 
 
+import com.cotato.networking1.dto.RegisterNewPropertyRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,4 +24,11 @@ public class Property {
     private String roadAddress;
     @Column(name = "local_address", nullable = false)
     private String localAddress;
+
+    public static Property of(RegisterNewPropertyRequest registerNewPropertyRequest) {
+        return Property.builder().localAddress(registerNewPropertyRequest.localAddress())
+                .postCode(registerNewPropertyRequest.postCode())
+                .roadAddress(registerNewPropertyRequest.roadAddress())
+                .build();
+    }
 }
