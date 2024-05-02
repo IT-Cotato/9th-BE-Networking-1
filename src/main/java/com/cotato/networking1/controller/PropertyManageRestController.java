@@ -2,6 +2,7 @@ package com.cotato.networking1.controller;
 
 import com.cotato.networking1.dto.PropertyDto;
 import com.cotato.networking1.service.PropertyManageServiceImpl;
+import com.cotato.networking1.service.PropertyService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,17 +19,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/api")
 public class PropertyManageRestController {
 
-  private final PropertyManageServiceImpl propertyService;
+  private final PropertyService propertyService;
 
   @Autowired
   public PropertyManageRestController(PropertyManageServiceImpl propertyService) {
     this.propertyService = propertyService;
   }
 
+
   //우편번호에 해당하는 매물 정보를 응답
   @GetMapping(path = "/properties")
-  public ResponseEntity<List<PropertyDto>> getPropertiesByZipCode(
-      @RequestParam("zip-code") String zipCode) {
+  public ResponseEntity<List<PropertyDto>> getPropertiesByZipCode(@RequestParam("zip-code") String zipCode) {
     List<PropertyDto> properties = propertyService.findPropertyByZipCode(zipCode);
     return new ResponseEntity<>(properties, HttpStatus.OK);
   }

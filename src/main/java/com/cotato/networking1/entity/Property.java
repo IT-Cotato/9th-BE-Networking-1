@@ -34,6 +34,7 @@ public class Property {
   @Column(name = "road-name-address")
   private String roadNameAddress;
 
+
   @Builder
   public Property(Long id, String zipCode, String roadNameAddress, String landLotNameAddress) {
     this.id = id;

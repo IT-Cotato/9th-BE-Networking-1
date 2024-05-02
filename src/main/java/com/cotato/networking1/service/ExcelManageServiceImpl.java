@@ -6,22 +6,18 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class ExcelManageServiceImpl implements ExcelManageService {
 
   private final PropertyRepository repository;
-
-  @Autowired
-  public ExcelManageServiceImpl(PropertyRepository repository) {
-    this.repository = repository;
-  }
 
   private final static String filePath = "C:\\Users\\USER\\Desktop\\Cotato\\9th-BE-Networking-1\\src\\main\\resources\\매물정보.xlsx";
 

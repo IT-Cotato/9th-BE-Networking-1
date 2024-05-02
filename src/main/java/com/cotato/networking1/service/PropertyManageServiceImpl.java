@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
 public class PropertyManageServiceImpl implements PropertyService {
 
   private final PropertyRepository repository;
@@ -24,7 +25,6 @@ public class PropertyManageServiceImpl implements PropertyService {
   public List<PropertyDto> findPropertyByZipCode(String zipCode) {
     List<Property> properties = repository.findAll();
     List<PropertyDto> propertiesDtoList = new ArrayList<>();
-
     for (Property property : properties) {
       if (property.getZipCode().equals(zipCode)) {
         PropertyDto propertiesDto = PropertyDto.builder()
