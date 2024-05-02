@@ -34,6 +34,9 @@ public class PropertyTestDataService {
         List<Property> propertyList = new ArrayList<Property>();
 
         for (int i = 1; i < n; i++) {
+            if (i % 10000 == 0) {
+                System.out.println(i + "번째 삽입");
+            }
             Row row = sheet.getRow(i);
 
             String zipCode = row.getCell(0).getStringCellValue();
