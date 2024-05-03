@@ -20,8 +20,7 @@ public class ExcelController {
     private final ExcelService excelService;
 
     @PostMapping("/test-data")
-    public ResponseEntity<?> parsingData(@RequestPart(value = "file") MultipartFile multipartFile) throws IOException, InvalidFormatException {
-
+    public ResponseEntity<Void> parsingPropertyData(@RequestPart(value = "file") MultipartFile multipartFile) throws IOException, InvalidFormatException {
         excelService.parsingTestData(multipartFile);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

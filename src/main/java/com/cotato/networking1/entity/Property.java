@@ -8,7 +8,7 @@ import lombok.*;
 
 @Entity
 @Getter
-@Builder
+//@Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Property {

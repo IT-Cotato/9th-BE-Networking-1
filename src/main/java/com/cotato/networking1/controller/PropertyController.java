@@ -7,6 +7,7 @@ import com.cotato.networking1.service.PropertyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,7 +18,7 @@ public class PropertyController {
     private final PropertyService propertyService;
 
     @GetMapping("/properties")
-    public ResponseEntity<FindPropertyResponse> findProperty(@RequestParam(name = "zip-code") String zipCode){
+    public ResponseEntity<FindPropertyResponse> findPropertiesByZipCode(@RequestParam(name = "zip-code") String zipCode){
         return ResponseEntity.status(HttpStatus.OK).body(propertyService.findProperties(zipCode));
     }
 
