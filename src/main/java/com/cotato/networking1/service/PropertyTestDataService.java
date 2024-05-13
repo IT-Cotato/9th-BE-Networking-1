@@ -1,7 +1,7 @@
 package com.cotato.networking1.service;
 
 import com.cotato.networking1.domain.enttiy.Property;
-import com.cotato.networking1.repository.PropertyBulkRepository;
+import com.cotato.networking1.repository.PropertyJdbcRepository;
 import com.cotato.networking1.repository.PropertyRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -21,7 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PropertyTestDataService {
     private final PropertyRepository propertyRepository;
-    private final PropertyBulkRepository propertyBulkRepository;
+    private final PropertyJdbcRepository propertyJdbcRepository;
 
     public List<Property> getPropertyListFromSheet(Sheet sheet) {
         int n = sheet.getPhysicalNumberOfRows();

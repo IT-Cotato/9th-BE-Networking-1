@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class PropertyBulkRepository {
+public class PropertyJdbcRepository {
     private final JdbcTemplate jdbcTemplate;
     @Transactional
     public void saveAll(List<Property> propertyList) {
