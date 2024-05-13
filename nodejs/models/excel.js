@@ -2,6 +2,11 @@ const XLSX = require('xlsx');
 const { Property } = require('./index');
 
 const readAndSaveExcelData = async () => {
+    // Property 테이블이 비어 있는지 확인
+    const count = await Property.count();
+    if (count > 0) {
+        return;
+    } // 이미 데이터가 존재하면 함수 종료
     // 엑셀 파일 읽기
     const workbook = XLSX.readFile('./매물_정보.xlsx');
     const sheet_name_list = workbook.SheetNames;
