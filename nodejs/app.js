@@ -8,6 +8,7 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 const pageRouter = require('./routes/page');
+const propertiesRouter = require('./routes/properties');
 const { sequelize } = require('./models');
 const { readAndSaveExcelData } = require('./models/excel');
 const db = require('./models/index');
@@ -44,6 +45,7 @@ app.use(session({
 }));
 
 app.use('/', pageRouter);
+app.use('/api/properties', propertiesRouter);
 app.use((req, res, next) => { // 404 NOT FOUND
     const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
     error.status = 404;
