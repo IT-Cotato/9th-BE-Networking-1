@@ -87,7 +87,12 @@ public class PropertyTestDataService {
 
         List<Property> propertyList = getPropertyListFromSheet(sheet);
 
+        long beforeTime = System.currentTimeMillis();
         propertyRepository.saveAll(propertyList);
+        long afterTime = System.currentTimeMillis();
+
+        long secDiffTime = (afterTime - beforeTime) / 1000;
+        System.out.println("소요시간 : " + secDiffTime + "초");
 
         workbook.close();
         opcPackage.close();
@@ -104,7 +109,12 @@ public class PropertyTestDataService {
 
         List<Property> propertyList = getPropertyListFromSheet(sheet);
 
-        propertyBulkRepository.saveAll(propertyList);
+        long beforeTime = System.currentTimeMillis();
+        propertyJdbcRepository.saveAll(propertyList);
+        long afterTime = System.currentTimeMillis();
+
+        long secDiffTime = (afterTime - beforeTime) / 1000;
+        System.out.println("소요시간 : " + secDiffTime + "초");
 
         workbook.close();
         opcPackage.close();
