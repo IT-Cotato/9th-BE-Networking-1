@@ -7,3 +7,11 @@ exports.getPropertiesByZipCode = async (zipCode) => {
         }
     });
 };
+
+exports.createProperty = async (zipCode, roadNameAddress, landLotNameAddress) => {
+    return await Property.create({
+        postalCode: zipCode,
+        roadNameAddress,
+        landLotNameAddress
+    });
+};
