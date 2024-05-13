@@ -15,3 +15,11 @@ exports.createProperty = async (zipCode, roadNameAddress, landLotNameAddress) =>
         landLotNameAddress
     });
 };
+
+exports.deletePropertyByRoadNameAddress = async (roadNameAddress) => {
+    return await Property.destroy({
+        where: {
+            roadNameAddress
+        }
+    });
+};

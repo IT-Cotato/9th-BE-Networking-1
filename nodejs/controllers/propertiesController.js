@@ -27,3 +27,17 @@ exports.createProperty = async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 };
+
+exports.deletePropertyByRoadNameAddress = async (req, res) => {
+    const { roadNameAddress } = req.query;
+    if (!roadNameAddress) {
+        return res.status(400).json({ error: 'road-name-address is required' });
+    }
+
+    try {
+        await propertiesService.deletePropertyByRoadNameAddress(roadNameAddress);
+        res.json({ message: 'Property deleted successfully' });
+    } catch (err) {
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
