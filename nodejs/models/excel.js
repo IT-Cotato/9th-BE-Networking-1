@@ -2,11 +2,15 @@ const XLSX = require('xlsx');
 const { Property } = require('./index');
 
 const readAndSaveExcelData = async () => {
+    console.time("Execution Time"); // 시간 측정 시작
+
     // Property 테이블이 비어 있는지 확인
     const count = await Property.count();
     if (count > 0) {
+        console.timeEnd("Execution Time"); // 시간 측정 종료
         return;
-    } // 이미 데이터가 존재하면 함수 종료
+    }
+
     // 엑셀 파일 읽기
     const workbook = XLSX.readFile('./test_data.xlsx');
     const sheet_name_list = workbook.SheetNames;
@@ -20,6 +24,8 @@ const readAndSaveExcelData = async () => {
             jibunAddress: `${row['시도']} ${row['시군구']} ${row['법정동명']} ${row['지번본번']}-${row['지번부번']}`
         });
     }
+
+    console.timeEnd("Execution Time"); // 시간 측정 종료
 };
 
 module.exports = { readAndSaveExcelData };
