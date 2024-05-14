@@ -9,9 +9,20 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
+@TableGenerator(
+        name = "PROPERTY_GENERATOR", //식별자 생성기 이름
+        table = "sequence_table", //키 생성 테이블명
+        pkColumnName = "sequence_name", //시퀀스 컬럼명
+        valueColumnName = "next_val", //시퀀스 값 컬럼명
+        initialValue = 1, //초기 값
+        allocationSize = 200000
+)
 public class Property {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(
+            strategy = GenerationType.TABLE
+            , generator = "PROPERTY_GENERATOR"
+    )
     @Column(name = "property_id")
     private Long id;
     private String zipCode;
