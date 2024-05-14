@@ -8,7 +8,7 @@ const readAndSaveExcelData = async () => {
         return;
     } // 이미 데이터가 존재하면 함수 종료
     // 엑셀 파일 읽기
-    const workbook = XLSX.readFile('./매물_정보.xlsx');
+    const workbook = XLSX.readFile('./test_data.xlsx');
     const sheet_name_list = workbook.SheetNames;
     const data = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
 
