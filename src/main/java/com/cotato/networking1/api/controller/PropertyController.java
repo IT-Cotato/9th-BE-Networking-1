@@ -34,7 +34,7 @@ public class PropertyController {
     }
 
     @DeleteMapping("/properties")
-    public ResponseEntity<?> deleteProperty(@RequestParam("road-name-address") String roadNameAddress){
+    public ResponseEntity<Void> deleteProperty(@RequestParam("road-name-address") String roadNameAddress){
         propertyService.deleteProperty(roadNameAddress);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

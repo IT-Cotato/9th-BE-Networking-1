@@ -1,9 +1,12 @@
 package com.cotato.networking1.domain.service;
 
 import com.cotato.networking1.domain.entity.Property;
+import com.cotato.networking1.domain.repository.PropertyBulkRepository;
 import com.cotato.networking1.domain.repository.PropertyRepository;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -22,7 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ExcelParsingService {
 
-    private static final String EXCEL_PATH = "./properties.xlsx";
+    private static final String EXCEL_PATH = "./properties20.xlsx";
     private static final int ZIPCODE_CELL = 0;
     private static final int CITY_CELL = 1;
     private static final int CITY_DETAIL_CELL = 2;
@@ -33,13 +36,15 @@ public class ExcelParsingService {
     private static final int LOT_MAIN_CELL = 7;
     private static final int LOT_SUB_CELL = 8;
     private final PropertyRepository propertyRepository;
+    private final PropertyBulkRepository propertyBulkRepository;
 
     @Transactional
-    public void createData() throws InvalidFormatException, IOException {
-        OPCPackage excel = OPCPackage.open(new File(EXCEL_PATH));
-        Workbook sheets = new XSSFWorkbook(excel);
+    public void createDataWithSaveAll() throws InvalidFormatException, IOException {
+        Workbook sheets = openWorkBook(EXCEL_PATH);
         Sheet firstSheet = sheets.getSheetAt(0);
 
+        List<Property> properties = new ArrayList<>();
+        long start = System.currentTimeMillis();
         for (Row row : firstSheet) {
             if (row.getRowNum() == 0) {
                 continue;
@@ -48,12 +53,43 @@ public class ExcelParsingService {
             String basicAddress = getBasicAddress(row);
             String roadNameAddress = basicAddress + " " + getRoadNameAddress(row);
             String landLotNameAddress = basicAddress + " " + getLandLotNameAddress(row);
-            log.info("[기본 주소]: {}", basicAddress);
 
             Property createdProperty = Property.of(zipCode, roadNameAddress, landLotNameAddress);
-            propertyRepository.save(createdProperty);
+            properties.add(createdProperty);
         }
+        propertyRepository.saveAll(properties);
+        System.out.println("엑셀 파싱 후 saveAll()까지 걸린 시간 : " + (System.currentTimeMillis() - start) + " ms");
         sheets.close();
+    }
+
+    @Transactional
+    public void createDataWithJdbc() throws IOException, InvalidFormatException {
+        Workbook sheets = openWorkBook(EXCEL_PATH);
+        Sheet firstSheet = sheets.getSheetAt(0);
+
+        List<Property> properties = new ArrayList<>();
+        long start = System.currentTimeMillis();
+        for (Row row : firstSheet) {
+            if (row.getRowNum() == 0) {
+                continue;
+            }
+            String zipCode = getZipCode(row);
+            String basicAddress = getBasicAddress(row);
+            String roadNameAddress = basicAddress + " " + getRoadNameAddress(row);
+            String landLotNameAddress = basicAddress + " " + getLandLotNameAddress(row);
+
+            Property createdProperty = Property.of(zipCode, roadNameAddress, landLotNameAddress);
+            properties.add(createdProperty);
+        }
+
+        propertyBulkRepository.saveAll(properties);
+        System.out.println("[JdbcTemplate] 엑셀 파싱 후 saveAll()까지 걸린 시간 : " + (System.currentTimeMillis() - start) + " ms");
+        sheets.close();
+    }
+
+    private Workbook openWorkBook(String filePath) throws IOException, InvalidFormatException {
+        OPCPackage excel = OPCPackage.open(new File(filePath));
+        return new XSSFWorkbook(excel);
     }
 
     private String getLandLotNameAddress(Row row) {
