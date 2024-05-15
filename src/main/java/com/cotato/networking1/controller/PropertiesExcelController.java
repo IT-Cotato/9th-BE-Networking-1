@@ -1,7 +1,5 @@
 package com.cotato.networking1.controller;
 
-//import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-//import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.MediaType;
@@ -13,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cotato.networking1.service.PropertiesExcelService;
 
 @RestController
-@RequestMapping(path = "/api/test-data", consumes = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/api/test-data")
 public class PropertiesExcelController {
 
     private final PropertiesExcelService propertiesExcelService;
@@ -26,7 +24,21 @@ public class PropertiesExcelController {
     @PostMapping("")
     public ResponseEntity<String> insertPropertyData() {
 
-        return ResponseEntity.ok(propertiesExcelService.insertPropertyData("C:/Users/yejin/dev/9th-BE-Networking-1/property.xlsx"));
+        return ResponseEntity.ok(propertiesExcelService.insertPropertyData("C:/Users/yejin/dev/9th-BE-Networking-1/property2.xlsx"));
+
+    }
+
+    @PostMapping("/2")
+    public ResponseEntity<String> insertPropertyData2() {
+
+        return ResponseEntity.ok(propertiesExcelService.insertPropertyData2("C:/Users/yejin/dev/9th-BE-Networking-1/property2.xlsx"));
+
+    }
+
+    @PostMapping("/3")
+    public ResponseEntity<String> insertPropertyData3() {
+
+        return ResponseEntity.ok(propertiesExcelService.insertPropertyData3("C:/Users/yejin/dev/9th-BE-Networking-1/property2.xlsx"));
 
     }
 }
