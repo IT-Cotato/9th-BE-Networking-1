@@ -18,6 +18,6 @@ public class TestDataController {
 
     @PostMapping("")
     public ResponseEntity<String> insertRealEstateTestData() throws IOException, InvalidFormatException, org.apache.poi.openxml4j.exceptions.InvalidFormatException {
-        return ResponseEntity.ok(realEstateTestDataService.insertRealEstateTestData("C:/Users/user/OneDrive/바탕 화면/코테이토/9기/excel.xlsx"));
+        return ResponseEntity.ok(realEstateTestDataService.insertRealEstateTestData("C:/Users/user/OneDrive/바탕 화면/코테이토/9기/서울시_20만개.xlsx"));
     }
 }

@@ -27,10 +27,14 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.mysql:mysql-connector-j'
+    implementation 'mysql:mysql-connector-java:8.0.21'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.apache.poi:poi:4.1.2'
     implementation 'org.apache.poi:poi-ooxml:4.1.2'
+    implementation 'org.springframework.boot:spring-boot-starter-batch'
+    implementation 'org.springframework.batch:spring-batch-core'
+    implementation 'org.springframework.batch:spring-batch-infrastructure'
 }
 
 tasks.named('test') {

@@ -9,6 +9,7 @@ import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -16,12 +17,36 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.stereotype.Service;
+
+import com.cotato.networking1.domain.entity.RealEstate;
+import com.cotato.networking1.repository.RealEstateRepository;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.stereotype.Service;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+
 @Service
 @RequiredArgsConstructor
 public class RealEstateTestDataService {
 
     private final RealEstateRepository realEstateRepository;
 
+    @Cacheable("realEstateData")
+    @Async
     @Transactional
     public String insertRealEstateTestData(String path) throws InvalidFormatException, IOException, org.apache.poi.openxml4j.exceptions.InvalidFormatException {
         OPCPackage opcPackage = OPCPackage.open(new File(path));
