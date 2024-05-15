@@ -1,10 +1,14 @@
 spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
   application:
     name: networking1
-
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${DB_URI}&rewriteBatchedStatements=true
+    #&profileSQL=true&logger=Slf4JLogger&maxQuerySizeToLog=999999
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
 
