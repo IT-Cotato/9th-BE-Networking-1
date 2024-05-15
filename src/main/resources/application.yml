@@ -4,19 +4,31 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${DB_URI}
+    url: ${DB_URI}?rewriteBatchedStatements=true&profileSQL=true&&logger=Slf4JLogger
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
 
+    hikari:
+      data-source-properties:
+        rewriteBatchedStatements: true
+
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 200000
+        order_inserts: true
+        order_updates: true
 
-logging:
-    level:
-      org:
-        hibernate:
-          type:
-            descriptor:
-              sql: trace
+
+#logging:
+#    level:
+#      org:
+#        hibernate:
+#          type:
+#            descriptor:
+#              sql: trace
 
