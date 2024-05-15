@@ -1,6 +1,7 @@
 package com.cotato.networking1.service;
 
 import com.cotato.networking1.entity.Property;
+import com.cotato.networking1.repository.PropertyBulkRepository;
 import com.cotato.networking1.repository.PropertyRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.*;
@@ -17,10 +18,15 @@ import java.util.List;
 public class PropertyTestDataService {
 
     private final PropertyRepository propertyRepository;
+    private final PropertyBulkRepository propertyBulkRepository;
 
     public void saveProperties(MultipartFile file) throws IOException {
         List<Property> properties = parseExcelFile(file);
         propertyRepository.saveAll(properties);
+    }
+    public void savePropertiesBulk(MultipartFile file) throws IOException {
+        List<Property> properties = parseExcelFile(file);
+        propertyBulkRepository.saveAll(properties);
     }
 
     private List<Property> parseExcelFile(MultipartFile file) throws IOException {
