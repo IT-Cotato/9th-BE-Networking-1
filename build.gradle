@@ -9,6 +9,7 @@ version = '0.0.1-SNAPSHOT'
 
 java {
     sourceCompatibility = '21'
+    targetCompatibility = '21' // virtual thread 기능 사용하기 위한 설정
 }
 
 configurations {
