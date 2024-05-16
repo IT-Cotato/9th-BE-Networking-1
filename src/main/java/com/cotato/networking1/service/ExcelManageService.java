@@ -4,5 +4,12 @@ import java.io.IOException;
 
 public interface ExcelManageService {
 
-  void upload() throws IOException;
+  void jpaUpload() throws IOException;
+
+  void bulkUpload() throws IOException;
+
+//  void jpaDeleteAll() throws IOException;
+//
+//  void bulkDeleteAll() throws IOException;
+
 }

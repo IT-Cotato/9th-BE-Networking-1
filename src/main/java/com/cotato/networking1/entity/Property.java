@@ -21,17 +21,17 @@ import lombok.ToString;
 public class Property {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", nullable = false)
   private Long id;
 
-  @Column(name = "zip-code")
+  @Column(name = "zip_code")
   private String zipCode;
 
-  @Column(name = "land-lot-name-address")
+  @Column(name = "land_lot_name_address")
   private String landLotNameAddress;
 
-  @Column(name = "road-name-address")
+  @Column(name = "road_name_address")
   private String roadNameAddress;
 
 
