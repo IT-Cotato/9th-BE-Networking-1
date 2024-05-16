@@ -26,4 +26,25 @@ public class ExcelController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Could not upload the file: " + e.getMessage());
         }
     }
+
+    @PostMapping("/test-data-bulk")
+    public ResponseEntity<String> uploadFileBulk(@RequestParam("file") MultipartFile file) {
+        try {
+            propertyTestDataService.savePropertiesBulk(file);
+            return ResponseEntity.ok("File uploaded and data saved successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Could not upload the file: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/test-data-virtual-thread")
+    public ResponseEntity<String> uploadFileWithVirtualThread(@RequestParam("file") MultipartFile file) {
+        try {
+            propertyTestDataService.savePropertiesInParallel(file);
+            return ResponseEntity.ok("File uploaded and data saved successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Could not upload the file: " + e.getMessage());
+        }
+    }
+
 }

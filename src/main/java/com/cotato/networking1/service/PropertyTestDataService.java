@@ -7,11 +7,14 @@ import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.*;
+
 
 @Service
 @RequiredArgsConstructor
@@ -20,13 +23,65 @@ public class PropertyTestDataService {
     private final PropertyRepository propertyRepository;
     private final PropertyBulkRepository propertyBulkRepository;
 
+    @Transactional
     public void saveProperties(MultipartFile file) throws IOException {
+        long startTime = System.currentTimeMillis();
+
         List<Property> properties = parseExcelFile(file);
         propertyRepository.saveAll(properties);
+
+        long endTime = System.currentTimeMillis();
+        long duration = endTime - startTime;
+        System.out.println("기존 방식:" + duration + " milliseconds");
     }
+
+    @Transactional
     public void savePropertiesBulk(MultipartFile file) throws IOException {
+        long startTime = System.currentTimeMillis();
+
         List<Property> properties = parseExcelFile(file);
         propertyBulkRepository.saveAll(properties);
+
+        long endTime = System.currentTimeMillis();
+        long duration = endTime - startTime;
+        System.out.println("bulk insert 방식: " + duration + " milliseconds");
+    }
+
+    @Transactional
+    public void savePropertiesInParallel(MultipartFile file) throws IOException {
+        long startTime = System.currentTimeMillis();
+
+        List<Property> properties = parseExcelFile(file);
+
+        int numThreads = 256; // 사용할 스레드 수
+        int batchSize = properties.size() / numThreads;
+
+        // Virtual Thread Executor 생성
+        ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor();
+
+        for (int i = 0; i < numThreads; i++) {
+            int start = i * batchSize;
+            int end = (i + 1) * batchSize;
+            List<Property> batch = properties.subList(start, Math.min(end, properties.size()));
+
+            executor.submit(() -> {
+                propertyBulkRepository.saveAll(batch);
+            });
+        }
+
+        executor.shutdown();
+        try {
+            if (!executor.awaitTermination(1, TimeUnit.HOURS)) {
+                executor.shutdownNow();
+            }
+        } catch (InterruptedException e) {
+            executor.shutdownNow();
+            Thread.currentThread().interrupt();
+        }
+
+        long endTime = System.currentTimeMillis();
+        long duration = endTime - startTime;
+        System.out.println("virtual thread 방식 " + duration + " milliseconds");
     }
 
     private List<Property> parseExcelFile(MultipartFile file) throws IOException {
@@ -81,7 +136,6 @@ public class PropertyTestDataService {
         }
     }
 
-
     private String numericToString(Cell cell) {
         if (cell == null || cell.getCellType() == CellType.BLANK) {
             throw new IllegalArgumentException("Cell is null or blank");
@@ -103,5 +157,6 @@ public class PropertyTestDataService {
             throw new IllegalArgumentException("Unsupported cell type: " + cell.getCellType());
         }
     }
+
 
 }
