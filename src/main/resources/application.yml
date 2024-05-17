@@ -18,6 +18,10 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+  threads:
+    virtual:
+      enabled: true
+
 
 #logging:
 #    level:
