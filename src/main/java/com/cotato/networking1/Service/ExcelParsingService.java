@@ -1,6 +1,7 @@
 package com.cotato.networking1.Service;
 
 import com.cotato.networking1.Entity.Property;
+import com.cotato.networking1.Repository.PropertyBulkRepository;
 import com.cotato.networking1.Repository.PropertyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,7 @@ import java.util.List;
 public class ExcelParsingService {
 
     private final PropertyRepository propertyRepository;
+    private final PropertyBulkRepository propertyBulkRepository;
     public static final String FILE_PATH = "C:\\Users\\samsung\\Desktop\\코테이토\\코테이토 9기 네트워킹\\서울시_20만개.xlsx";
 
     public void upload() throws InvalidFormatException, IOException {
@@ -64,7 +66,8 @@ public class ExcelParsingService {
                     .landLotNameAddress(landLotNameAddress)
                     .build());
         }
-        propertyRepository.saveAll(propertyList);
+        //propertyRepository.saveAll(propertyList);
+        propertyBulkRepository.saveAll(propertyList);
 
         workbook.close();
     }
