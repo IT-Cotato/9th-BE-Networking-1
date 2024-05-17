@@ -1,9 +1,6 @@
 package com.cotato.networking1.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -11,9 +8,21 @@ import lombok.*;
 //@Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@TableGenerator(
+        name = "PROPERTY_SEQ_GENERATOR",
+        table = "MY_SEQUENCES",
+        pkColumnValue = "PROPERTY_SEQ",
+        initialValue = 1,
+        allocationSize = 10000
+
+)
 public class Property {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "PROPERTY_SEQ_GENERATOR"
+    )
     private Long id;
 
     private String zipCode;

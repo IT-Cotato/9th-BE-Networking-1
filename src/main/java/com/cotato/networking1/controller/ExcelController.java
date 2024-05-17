@@ -21,7 +21,11 @@ public class ExcelController {
 
     @PostMapping("/test-data")
     public ResponseEntity<Void> parsingPropertyData(@RequestPart(value = "file") MultipartFile multipartFile) throws IOException, InvalidFormatException {
+        long startTime = System.currentTimeMillis();
         excelService.parsingTestData(multipartFile);
+        long endTime = System.currentTimeMillis();
+        long totalTime = endTime - startTime;
+        log.info("Run Time : {} ms", totalTime);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

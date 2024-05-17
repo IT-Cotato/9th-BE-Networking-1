@@ -1,6 +1,7 @@
 package com.cotato.networking1.service;
 
 import com.cotato.networking1.entity.Property;
+import com.cotato.networking1.repository.JdbcPropertyRepository;
 import com.cotato.networking1.repository.PropertyRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ import java.util.List;
 public class ExcelService {
 
     private final PropertyRepository propertyRepository;
+    private final JdbcPropertyRepository jdbcPropertyRepository;
 
     @Transactional
     public void parsingTestData(MultipartFile multipartFile) throws IOException{
@@ -68,7 +70,8 @@ public class ExcelService {
             }
         }
 
-        propertyRepository.saveAll(properties);
+        jdbcPropertyRepository.saveAllByJdbc(properties);
+//        propertyRepository.saveAll(properties);
 
         workbook.close();
     }
