@@ -49,39 +49,42 @@ public class PropertyTestDataService {
 
     @Transactional
     public void savePropertiesInParallel(MultipartFile file) throws IOException {
-        long startTime = System.currentTimeMillis();
-
         List<Property> properties = parseExcelFile(file);
-
-        int numThreads = 256; // 사용할 스레드 수
-        int batchSize = properties.size() / numThreads;
+        int batchSize = 1000; // 한 번에 처리할 배치 크기
 
         // Virtual Thread Executor 생성
         ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor();
+        List<Callable<Void>> tasks = new ArrayList<>();
 
-        for (int i = 0; i < numThreads; i++) {
-            int start = i * batchSize;
-            int end = (i + 1) * batchSize;
-            List<Property> batch = properties.subList(start, Math.min(end, properties.size()));
+        for (int i = 0; i < properties.size(); i += batchSize) {
+            int start = i;
+            int end = Math.min(i + batchSize, properties.size());
+            List<Property> batch = properties.subList(start, end);
 
-            executor.submit(() -> {
+            tasks.add(() -> {
                 propertyBulkRepository.saveAll(batch);
+                return null;
             });
         }
 
-        executor.shutdown();
         try {
-            if (!executor.awaitTermination(1, TimeUnit.HOURS)) {
-                executor.shutdownNow();
+            List<Future<Void>> futures = executor.invokeAll(tasks);
+            for (Future<Void> future : futures) {
+                future.get(); // 각 작업의 완료를 기다림
             }
-        } catch (InterruptedException e) {
-            executor.shutdownNow();
-            Thread.currentThread().interrupt();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        } finally {
+            executor.shutdown();
+            try {
+                if (!executor.awaitTermination(1, TimeUnit.HOURS)) {
+                    executor.shutdownNow();
+                }
+            } catch (InterruptedException e) {
+                executor.shutdownNow();
+                Thread.currentThread().interrupt();
+            }
         }
-
-        long endTime = System.currentTimeMillis();
-        long duration = endTime - startTime;
-        System.out.println("virtual thread 방식 " + duration + " milliseconds");
     }
 
     private List<Property> parseExcelFile(MultipartFile file) throws IOException {
