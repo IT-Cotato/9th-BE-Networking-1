@@ -22,7 +22,7 @@ import java.util.List;
 public class ExcelParsingService {
 
     private final PropertyRepository propertyRepository;
-    public static final String FILE_PATH = "C:\\Users\\samsung\\Desktop\\properties.xlsx";
+    public static final String FILE_PATH = "C:\\Users\\samsung\\Desktop\\코테이토\\코테이토 9기 네트워킹\\서울시_20만개.xlsx";
 
     public void upload() throws InvalidFormatException, IOException {
         OPCPackage opcPackage = OPCPackage.open(new File(FILE_PATH));

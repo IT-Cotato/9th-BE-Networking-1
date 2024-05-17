@@ -23,7 +23,12 @@ public class ExcelParsingController {
 
     @PostMapping
     public ResponseEntity insertTestData() throws InvalidFormatException, IOException {
+        long startTime = System.currentTimeMillis();
         excelParsingService.upload();
+        long endTime = System.currentTimeMillis();
+
+        long elapsedTime = endTime - startTime;
+        System.out.println("소요 시간: "+ (double) elapsedTime / 1000);
         return new ResponseEntity(HttpStatus.OK);
     }
 }
